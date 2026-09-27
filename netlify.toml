@@ -1,5 +1,5 @@
 [build]
-  command = "rm -rf .netlify-build && mkdir .netlify-build && unzip -q 'BuildMatrix-unified-signup(1).zip' -d .netlify-build && cd .netlify-build/project && npm ci && npm run build"
+  command = "rm -rf .netlify-build && mkdir .netlify-build && unzip -q 'BuildMatrix-unified-signup(1).zip' -d .netlify-build && cd .netlify-build/project && npm install && npm run build"
   publish = ".netlify-build/project/dist"
 
 [[redirects]]
