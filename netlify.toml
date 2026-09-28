@@ -2,6 +2,16 @@
   command = '''rm -rf .netlify-build && mkdir .netlify-build && unzip -q 'BuildMatrix-unified-signup(1).zip' -d .netlify-build && cd .netlify-build/project && mkdir -p public && printf '%s\n' '<?xml version="1.0" encoding="UTF-8"?>' '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' '<url><loc>https://buildmx.netlify.app/</loc></url>' '<url><loc>https://buildmx.netlify.app/marketplace</loc></url>' '<url><loc>https://buildmx.netlify.app/categories</loc></url>' '<url><loc>https://buildmx.netlify.app/about</loc></url>' '<url><loc>https://buildmx.netlify.app/contact</loc></url>' '</urlset>' > public/sitemap.xml && printf '%s\n' 'User-agent: *' 'Allow: /' 'Disallow: /buyer' 'Disallow: /seller' 'Disallow: /admin' 'Disallow: /transporter' 'Disallow: /login' 'Disallow: /signup' 'Disallow: /forgot-password' 'Sitemap: https://buildmx.netlify.app/sitemap.xml' > public/robots.txt && perl -0pi -e 's#</head>#<meta name="google-site-verification" content="3keVVwvEx1wiNGsx01z8D6qDBUxbKLUBfXRo6EBzo2o" />\\n</head>#' index.html && npm install && npm run build'''
   publish = ".netlify-build/project/dist"
 
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml; charset=UTF-8"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=UTF-8"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
