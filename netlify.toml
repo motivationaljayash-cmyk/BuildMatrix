@@ -1,5 +1,5 @@
 [build]
-  command = '''rm -rf .netlify-build && mkdir .netlify-build && unzip -q 'BuildMatrix-unified-signup(1).zip' -d .netlify-build && cd .netlify-build/project && perl -0pi -e 's#</head>#<meta name="google-site-verification" content="vSIDwLDYo7dXQtYuFMzGcHNZV5KTz25wsSWkLqHdxR8" />\\n</head>#' index.html && npm install && npm run build'''
+  command = '''rm -rf .netlify-build && mkdir .netlify-build && unzip -q 'BuildMatrix-unified-signup(1).zip' -d .netlify-build && cd .netlify-build/project && perl -0pi -e 's#</head>#<meta name="google-site-verification" content="3keVVwvEx1wiNGsx01z8D6qDBUxbKLUBfXRo6EBzo2o" />\\n</head>#' index.html && npm install && npm run build'''
   publish = ".netlify-build/project/dist"
 
 [[redirects]]
