@@ -1,5 +1,5 @@
 [build]
-  command = '''rm -rf .netlify-build && mkdir .netlify-build && unzip -q 'BuildMatrix-unified-signup(1).zip' -d .netlify-build && cd .netlify-build/project && mkdir -p public && printf '%s\n' '<?xml version="1.0" encoding="UTF-8"?>' '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' '<url><loc>https://buildmx.netlify.app/</loc></url>' '<url><loc>https://buildmx.netlify.app/marketplace</loc></url>' '<url><loc>https://buildmx.netlify.app/categories</loc></url>' '<url><loc>https://buildmx.netlify.app/about</loc></url>' '<url><loc>https://buildmx.netlify.app/contact</loc></url>' '</urlset>' > public/sitemap.xml && printf '%s\n' 'User-agent: *' 'Allow: /' 'Disallow: /buyer' 'Disallow: /seller' 'Disallow: /admin' 'Disallow: /transporter' 'Disallow: /login' 'Disallow: /signup' 'Disallow: /forgot-password' 'Sitemap: https://buildmx.netlify.app/sitemap.xml' > public/robots.txt && perl -0pi -e 's#<title>.*?</title>#<title>BuildMatrix | Construction Materials Marketplace</title>#si; s#<meta name="description"[^>]*>\\s*##i; s#<script type="application/ld\\+json">.*?</script>\\s*##gis' index.html && python3 - <<'PY'
+  command = '''rm -rf .netlify-build && mkdir .netlify-build && unzip -q 'BuildMatrix-unified-signup(1).zip' -d .netlify-build && cd .netlify-build/project && mkdir -p public && cp -f public/buildmatrix.svg public/favicon.svg && printf '%s\n' '<?xml version="1.0" encoding="UTF-8"?>' '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' '<url><loc>https://buildmx.netlify.app/</loc></url>' '<url><loc>https://buildmx.netlify.app/marketplace</loc></url>' '<url><loc>https://buildmx.netlify.app/categories</loc></url>' '<url><loc>https://buildmx.netlify.app/about</loc></url>' '<url><loc>https://buildmx.netlify.app/contact</loc></url>' '</urlset>' > public/sitemap.xml && printf '%s\n' 'User-agent: *' 'Allow: /' 'Disallow: /buyer' 'Disallow: /seller' 'Disallow: /admin' 'Disallow: /transporter' 'Disallow: /login' 'Disallow: /signup' 'Disallow: /forgot-password' 'Sitemap: https://buildmx.netlify.app/sitemap.xml' > public/robots.txt && perl -0pi -e 's#<title>.*?</title>#<title>BuildMatrix | Construction Materials Marketplace</title>#si; s#<meta name="description"[^>]*>\\s*##i; s#<script type="application/ld\\+json">.*?</script>\\s*##gis' index.html && python3 - <<'PY'
 from pathlib import Path
 import re
 p = Path("index.html")
@@ -7,7 +7,8 @@ s = p.read_text()
 s = re.sub(r'<title>.*?</title>', '<title>BuildMatrix | Construction Materials Marketplace</title>', s, flags=re.I | re.S)
 s = re.sub(r'<meta name="description"[^>]*>\s*', '', s, flags=re.I)
 s = re.sub(r'<script type="application/ld\\+json">.*?</script>\s*', '', s, flags=re.I | re.S)
-seo = """<meta name="description" content="BuildMatrix is a construction materials marketplace connecting buyers with verified sellers, products, and construction supply services." />
+seo = """<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="description" content="BuildMatrix is a construction materials marketplace connecting buyers with verified sellers, products, and construction supply services." />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <link rel="canonical" href="https://buildmx.netlify.app/" />
 <meta property="og:type" content="website" />
