@@ -1,5 +1,30 @@
 [build]
-  command = '''rm -rf .netlify-build && mkdir .netlify-build && unzip -q 'BuildMatrix-unified-signup(1).zip' -d .netlify-build && cd .netlify-build/project && mkdir -p public && printf '%s\n' '<?xml version="1.0" encoding="UTF-8"?>' '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' '<url><loc>https://buildmx.netlify.app/</loc></url>' '<url><loc>https://buildmx.netlify.app/marketplace</loc></url>' '<url><loc>https://buildmx.netlify.app/categories</loc></url>' '<url><loc>https://buildmx.netlify.app/about</loc></url>' '<url><loc>https://buildmx.netlify.app/contact</loc></url>' '</urlset>' > public/sitemap.xml && printf '%s\n' 'User-agent: *' 'Allow: /' 'Disallow: /buyer' 'Disallow: /seller' 'Disallow: /admin' 'Disallow: /transporter' 'Disallow: /login' 'Disallow: /signup' 'Disallow: /forgot-password' 'Sitemap: https://buildmx.netlify.app/sitemap.xml' > public/robots.txt && perl -0pi -e 's#<title>.*?</title>#<title>BuildMatrix | Construction Materials Marketplace</title>#si; s#<meta name="description"[^>]*>\\s*##i; s#<script type="application/ld\\+json">.*?</script>\\s*##gis' index.html && sed -i 's#</head>#<meta name="description" content="BuildMatrix is a construction materials marketplace connecting buyers with verified sellers, products, and construction supply services." />\n<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />\n<link rel="canonical" href="https://buildmx.netlify.app/" />\n<meta property="og:type" content="website" />\n<meta property="og:site_name" content="BuildMatrix" />\n<meta property="og:title" content="BuildMatrix | Construction Materials Marketplace" />\n<meta property="og:description" content="Connect with verified construction material sellers and discover construction supply services on BuildMatrix." />\n<meta property="og:url" content="https://buildmx.netlify.app/" />\n<meta name="twitter:card" content="summary" />\n<meta name="twitter:title" content="BuildMatrix | Construction Materials Marketplace" />\n<meta name="twitter:description" content="Construction materials marketplace connecting buyers with verified sellers, products, and supply services." />\n<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://buildmx.netlify.app/#organization","name":"BuildMatrix","url":"https://buildmx.netlify.app/","description":"Construction materials marketplace connecting buyers with sellers and construction supply services."},{"@type":"WebSite","@id":"https://buildmx.netlify.app/#website","name":"BuildMatrix","url":"https://buildmx.netlify.app/","publisher":{"@id":"https://buildmx.netlify.app/#organization"}}]}</script>\n<meta name="google-site-verification" content="3keVVwvEx1wiNGsx01z8D6qDBUxbKLUBfXRo6EBzo2o" />\n</head>#' index.html#' index.html && npm install && npm run build'''
+  command = '''rm -rf .netlify-build && mkdir .netlify-build && unzip -q 'BuildMatrix-unified-signup(1).zip' -d .netlify-build && cd .netlify-build/project && mkdir -p public && printf '%s\n' '<?xml version="1.0" encoding="UTF-8"?>' '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' '<url><loc>https://buildmx.netlify.app/</loc></url>' '<url><loc>https://buildmx.netlify.app/marketplace</loc></url>' '<url><loc>https://buildmx.netlify.app/categories</loc></url>' '<url><loc>https://buildmx.netlify.app/about</loc></url>' '<url><loc>https://buildmx.netlify.app/contact</loc></url>' '</urlset>' > public/sitemap.xml && printf '%s\n' 'User-agent: *' 'Allow: /' 'Disallow: /buyer' 'Disallow: /seller' 'Disallow: /admin' 'Disallow: /transporter' 'Disallow: /login' 'Disallow: /signup' 'Disallow: /forgot-password' 'Sitemap: https://buildmx.netlify.app/sitemap.xml' > public/robots.txt && perl -0pi -e 's#<title>.*?</title>#<title>BuildMatrix | Construction Materials Marketplace</title>#si; s#<meta name="description"[^>]*>\\s*##i; s#<script type="application/ld\\+json">.*?</script>\\s*##gis' index.html && python3 - <<'PY'
+from pathlib import Path
+import re
+p = Path("index.html")
+s = p.read_text()
+s = re.sub(r'<title>.*?</title>', '<title>BuildMatrix | Construction Materials Marketplace</title>', s, flags=re.I | re.S)
+s = re.sub(r'<meta name="description"[^>]*>\s*', '', s, flags=re.I)
+s = re.sub(r'<script type="application/ld\\+json">.*?</script>\s*', '', s, flags=re.I | re.S)
+seo = """<meta name="description" content="BuildMatrix is a construction materials marketplace connecting buyers with verified sellers, products, and construction supply services." />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<link rel="canonical" href="https://buildmx.netlify.app/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="BuildMatrix" />
+<meta property="og:title" content="BuildMatrix | Construction Materials Marketplace" />
+<meta property="og:description" content="Connect with verified construction material sellers and discover construction supply services on BuildMatrix." />
+<meta property="og:url" content="https://buildmx.netlify.app/" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="BuildMatrix | Construction Materials Marketplace" />
+<meta name="twitter:description" content="Construction materials marketplace connecting buyers with verified sellers, products, and supply services." />
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://buildmx.netlify.app/#organization","name":"BuildMatrix","url":"https://buildmx.netlify.app/","description":"Construction materials marketplace connecting buyers with sellers and construction supply services."},{"@type":"WebSite","@id":"https://buildmx.netlify.app/#website","name":"BuildMatrix","url":"https://buildmx.netlify.app/","publisher":{"@id":"https://buildmx.netlify.app/#organization"}}]}</script>
+<meta name="google-site-verification" content="3keVVwvEx1wiNGsx01z8D6qDBUxbKLUBfXRo6EBzo2o" />
+"""
+s = s.replace("</head>", seo + "</head>", 1)
+p.write_text(s)
+PY
+ && npm install && npm run build'''
   publish = ".netlify-build/project/dist"
 
 [[headers]]
