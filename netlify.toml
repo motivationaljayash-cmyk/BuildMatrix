@@ -17,8 +17,9 @@ seo = """<meta name="description" content="BuildMatrix is a construction materia
 <meta property="og:url" content="https://buildmx.netlify.app/" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="BuildMatrix | Construction Materials Marketplace" />
-<meta name="twitter:description" content="Construction materials marketplace connecting buyers with verified sellers, products, and supply services." />
+<meta name="twitter:description" content="Construction materials marketplace connecting buyers with sellers and supply services." />
 <meta name="google-site-verification" content="3keVVwvEx1wiNGsx01z8D6qDBUxbKLUBfXRo6EBzo2o" />
+<meta name="google-site-verification" content="vSIDwLDYo7dXQtYuFMzGcHNZV5KTz25wsSWkLqHdxR8" />
 """
 fallback = """<main id="seo-fallback" style="max-width:900px;margin:0 auto;padding:40px 20px;font-family:Arial,sans-serif">
 <h1>BuildMatrix — Construction Materials Marketplace</h1>
