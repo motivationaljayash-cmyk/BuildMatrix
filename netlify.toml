@@ -24,7 +24,7 @@ seo = """<meta name="description" content="BuildMatrix is a construction materia
 s = s.replace("</head>", seo + "</head>", 1)
 p.write_text(s)
 PY
- && npm install && npm run build'''
+npm install && npm run build'''
   publish = ".netlify-build/project/dist"
 
 [[headers]]
