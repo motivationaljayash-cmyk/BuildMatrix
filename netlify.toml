@@ -21,6 +21,13 @@ seo = """<meta name="description" content="BuildMatrix is a construction materia
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://buildmx.netlify.app/#organization","name":"BuildMatrix","url":"https://buildmx.netlify.app/","description":"Construction materials marketplace connecting buyers with sellers and construction supply services."},{"@type":"WebSite","@id":"https://buildmx.netlify.app/#website","name":"BuildMatrix","url":"https://buildmx.netlify.app/","publisher":{"@id":"https://buildmx.netlify.app/#organization"}}]}</script>
 <meta name="google-site-verification" content="3keVVwvEx1wiNGsx01z8D6qDBUxbKLUBfXRo6EBzo2o" />
 """
+fallback = """<main id="seo-fallback" style="max-width:900px;margin:0 auto;padding:40px 20px;font-family:Arial,sans-serif">
+<h1>BuildMatrix — Construction Materials Marketplace</h1>
+<p>BuildMatrix connects buyers with construction material sellers and construction supply services.</p>
+<p>Browse construction materials, explore categories, and connect with verified sellers.</p>
+<nav><a href="/marketplace">Marketplace</a> · <a href="/categories">Categories</a> · <a href="/about">About BuildMatrix</a> · <a href="/contact">Contact</a></nav>
+</main>"""
+s = re.sub(r'<div id="root"></div>', fallback + '<div id="root"></div>', s, count=1, flags=re.I)
 s = s.replace("</head>", seo + "</head>", 1)
 p.write_text(s)
 PY
