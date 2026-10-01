@@ -307,22 +307,55 @@ async def spa(full_path:str, request:Request):
     if index.exists():
         html=index.read_text(encoding="utf-8")
         base = str(request.base_url).rstrip("/")
+        path = "/" + full_path.strip("/") if full_path.strip("/") else "/"
+        canonical = base + ("" if path == "/" else path)
+        page_titles = {
+            "/": "BuildMatrix | Construction Materials Marketplace",
+            "/marketplace": "Construction Materials Marketplace | BuildMatrix",
+            "/categories": "Construction Materials Categories | BuildMatrix",
+            "/about": "About BuildMatrix | Construction Materials Marketplace",
+            "/contact": "Contact BuildMatrix | Construction Materials Marketplace",
+        }
+        page_desc = {
+            "/": "BuildMatrix is a construction materials marketplace connecting buyers with sellers and construction supply services.",
+            "/marketplace": "Find construction materials from sellers on BuildMatrix, a marketplace connecting buyers with construction supply services.",
+            "/categories": "Browse construction material categories on BuildMatrix, including products and building supply services.",
+            "/about": "Learn about BuildMatrix and its construction materials marketplace for buyers and sellers.",
+            "/contact": "Contact BuildMatrix for help with construction materials, sellers, buyers, and supply services.",
+        }
+        title = page_titles.get(path, "BuildMatrix | Construction Materials Marketplace")
+        description = page_desc.get(path, page_desc["/"])
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "BuildMatrix",
+            "url": base + "/",
+            "logo": base + "/logo-mark.svg",
+            "description": page_desc["/"],
+        }
+        website_schema = {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "BuildMatrix",
+            "url": base + "/",
+        }
         seo = f"""<link rel="icon" type="image/svg+xml" href="{base}/favicon.svg">
-<link rel="shortcut icon" href="{base}/favicon.ico">
-<link rel="apple-touch-icon" href="{base}/logo.svg">
-<meta name="description" content="BuildMatrix is a construction materials marketplace connecting buyers with sellers and construction supply services.">
+<link rel="shortcut icon" href="{base}/favicon.svg">
+<link rel="apple-touch-icon" href="{base}/logo-mark.svg">
+<meta name="description" content="{description}">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-<link rel="canonical" href="{base}/">
+<link rel="canonical" href="{canonical}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BuildMatrix">
-<meta property="og:title" content="BuildMatrix | Construction Materials Marketplace">
-<meta property="og:description" content="Connect buyers with construction material sellers and supply services on BuildMatrix.">
-<meta property="og:url" content="{base}/">
-<meta property="og:image" content="{base}/logo.svg">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{description}">
+<meta property="og:url" content="{canonical}">
+<meta property="og:image" content="{base}/logo-mark.svg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BuildMatrix | Construction Materials Marketplace">
-<meta name="twitter:description" content="Construction materials marketplace connecting buyers with sellers and supply services.">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"BuildMatrix","url":"{base}/","logo":"{base}/logo.svg","description":"Construction materials marketplace connecting buyers with sellers and construction supply services."}</script>"""
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{description}">
+<script type="application/ld+json">{json.dumps(schema, separators=(",", ":"))}</script>
+<script type="application/ld+json">{json.dumps(website_schema, separators=(",", ":"))}</script>"""
         if "</head>" in html:
             html=html.replace("</head>",seo+"</head>",1)
         return HTMLResponse(html)
