@@ -300,13 +300,14 @@ async def sitemap():
     return Response(content=xml, media_type="application/xml")
 
 @app.get("/{full_path:path}")
-async def spa(full_path:str):
+async def spa(full_path:str, request:Request):
     index=STATIC/"index.html"
     if index.exists():
         html=index.read_text(encoding="utf-8")
-        seo = """<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="shortcut icon" href="/favicon.ico">
-<link rel="apple-touch-icon" href="/logo.svg">
+        base = str(request.base_url).rstrip("/")
+        seo = f"""<link rel="icon" type="image/svg+xml" href="{base}/favicon.svg">
+<link rel="shortcut icon" href="{base}/favicon.ico">
+<link rel="apple-touch-icon" href="{base}/logo.svg">
 <meta name="description" content="BuildMatrix is a construction materials marketplace connecting buyers with sellers and construction supply services.">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <link rel="canonical" href="https://buildmatrix-8i2z.onrender.com/">
@@ -314,12 +315,12 @@ async def spa(full_path:str):
 <meta property="og:site_name" content="BuildMatrix">
 <meta property="og:title" content="BuildMatrix | Construction Materials Marketplace">
 <meta property="og:description" content="Connect buyers with construction material sellers and supply services on BuildMatrix.">
-<meta property="og:url" content="https://buildmatrix-8i2z.onrender.com/">
-<meta property="og:image" content="https://buildmatrix-8i2z.onrender.com/logo.svg">
+<meta property="og:url" content="{base}/">
+<meta property="og:image" content="{base}/logo.svg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BuildMatrix | Construction Materials Marketplace">
 <meta name="twitter:description" content="Construction materials marketplace connecting buyers with sellers and supply services.">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"BuildMatrix","url":"https://buildmatrix-8i2z.onrender.com/","logo":"https://buildmatrix-8i2z.onrender.com/logo.svg","description":"Construction materials marketplace connecting buyers with sellers and construction supply services."}</script>"""
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"BuildMatrix","url":"{base}/","logo":"{base}/logo.svg","description":"Construction materials marketplace connecting buyers with sellers and construction supply services."}</script>"""
         if "</head>" in html:
             html=html.replace("</head>",seo+"</head>",1)
         return HTMLResponse(html)
