@@ -280,6 +280,15 @@ async def logo_svg():
 </svg>"""
     return Response(content=svg, media_type="image/svg+xml", headers={"Cache-Control":"public, max-age=31536000, immutable"})
 
+@app.get("/logo-mark.svg")
+async def logo_mark_svg():
+    svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="BuildMatrix">
+<rect width="512" height="512" rx="96" fill="#111827"/>
+<path d="M112 364V148h64l80 100 80-100h64v216h-64V216l-80 108-80-108v148z" fill="#fff"/>
+<path d="M96 408h320" stroke="#ef4444" stroke-width="28" stroke-linecap="round"/>
+</svg>"""
+    return Response(content=svg, media_type="image/svg+xml", headers={"Cache-Control":"public, max-age=31536000, immutable"})
+
 @app.get("/robots.txt")
 async def robots(request:Request):
     base=str(request.base_url).rstrip("/")
