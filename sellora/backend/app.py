@@ -3,7 +3,7 @@ from datetime import datetime,timedelta,timezone
 from pathlib import Path
 from fastapi import FastAPI,HTTPException,Depends,Request,UploadFile,File
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse,RedirectResponse
+from fastapi.responses import FileResponse,RedirectResponse,Response,PlainTextResponse,HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel,Field,EmailStr
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -252,8 +252,75 @@ async def seed():
         await db.products.insert_one({"id":oid(),"seller_id":s["id"],"name":name,"description":desc,"images":[img],"category":cat,"price":price,"commission_type":ct,"commission_value":cv,"stock":50,"destination_url":"","status":"published","clicks":0,"conversions":0,"sales":0,"created_at":now(),"updated_at":now()})
     return {"ok":True,"demo_accounts":{"seller":"seller@demo.sellora / DemoSeller123!","creator":"creator@demo.sellora / DemoCreator123!","admin":"admin@demo.sellora / DemoAdmin123!"}}
 
+@app.get("/favicon.svg")
+async def favicon_svg():
+    svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<rect width="64" height="64" rx="14" fill="#111827"/>
+<path d="M16 45V19h8l8 10 8-10h8v26h-8V31l-8 10-8-10v14z" fill="#fff"/>
+<path d="M13 49h38" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+</svg>"""
+    return Response(content=svg, media_type="image/svg+xml", headers={"Cache-Control":"public, max-age=31536000, immutable"})
+
+@app.get("/favicon.ico")
+async def favicon_ico():
+    svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<rect width="64" height="64" rx="14" fill="#111827"/>
+<path d="M16 45V19h8l8 10 8-10h8v26h-8V31l-8 10-8-10v14z" fill="#fff"/>
+<path d="M13 49h38" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+</svg>"""
+    return Response(content=svg, media_type="image/svg+xml", headers={"Cache-Control":"public, max-age=31536000, immutable"})
+
+@app.get("/logo.svg")
+async def logo_svg():
+    svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120">
+<rect width="420" height="120" rx="20" fill="#111827"/>
+<path d="M38 86V34h16l24 30 24-30h16v52h-16V59L78 91 54 59v27z" fill="#fff"/>
+<path d="M30 99h96" stroke="#ef4444" stroke-width="7" stroke-linecap="round"/>
+<text x="145" y="73" font-family="Arial,Helvetica,sans-serif" font-size="38" font-weight="700" fill="#fff">BuildMatrix</text>
+</svg>"""
+    return Response(content=svg, media_type="image/svg+xml", headers={"Cache-Control":"public, max-age=31536000, immutable"})
+
+@app.get("/robots.txt")
+async def robots():
+    return PlainTextResponse(
+        "User-agent: *\nAllow: /\nDisallow: /buyer\nDisallow: /seller\nDisallow: /admin\nDisallow: /transporter\nDisallow: /login\nDisallow: /signup\nDisallow: /forgot-password\nSitemap: https://buildmatrix-8i2z.onrender.com/sitemap.xml\n",
+        media_type="text/plain"
+    )
+
+@app.get("/sitemap.xml")
+async def sitemap():
+    xml = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://buildmatrix-8i2z.onrender.com/</loc></url>
+  <url><loc>https://buildmatrix-8i2z.onrender.com/marketplace</loc></url>
+  <url><loc>https://buildmatrix-8i2z.onrender.com/categories</loc></url>
+  <url><loc>https://buildmatrix-8i2z.onrender.com/about</loc></url>
+  <url><loc>https://buildmatrix-8i2z.onrender.com/contact</loc></url>
+</urlset>"""
+    return Response(content=xml, media_type="application/xml")
+
 @app.get("/{full_path:path}")
 async def spa(full_path:str):
     index=STATIC/"index.html"
-    if index.exists(): return FileResponse(index)
+    if index.exists():
+        html=index.read_text(encoding="utf-8")
+        seo = """<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/logo.svg">
+<meta name="description" content="BuildMatrix is a construction materials marketplace connecting buyers with sellers and construction supply services.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="https://buildmatrix-8i2z.onrender.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BuildMatrix">
+<meta property="og:title" content="BuildMatrix | Construction Materials Marketplace">
+<meta property="og:description" content="Connect buyers with construction material sellers and supply services on BuildMatrix.">
+<meta property="og:url" content="https://buildmatrix-8i2z.onrender.com/">
+<meta property="og:image" content="https://buildmatrix-8i2z.onrender.com/logo.svg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BuildMatrix | Construction Materials Marketplace">
+<meta name="twitter:description" content="Construction materials marketplace connecting buyers with sellers and supply services.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"BuildMatrix","url":"https://buildmatrix-8i2z.onrender.com/","logo":"https://buildmatrix-8i2z.onrender.com/logo.svg","description":"Construction materials marketplace connecting buyers with sellers and construction supply services."}</script>"""
+        if "</head>" in html:
+            html=html.replace("</head>",seo+"</head>",1)
+        return HTMLResponse(html)
     return {"message":"Sellora API is running","docs":"/docs"}
