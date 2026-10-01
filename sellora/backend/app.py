@@ -281,21 +281,23 @@ async def logo_svg():
     return Response(content=svg, media_type="image/svg+xml", headers={"Cache-Control":"public, max-age=31536000, immutable"})
 
 @app.get("/robots.txt")
-async def robots():
+async def robots(request:Request):
+    base=str(request.base_url).rstrip("/")
     return PlainTextResponse(
-        "User-agent: *\nAllow: /\nDisallow: /buyer\nDisallow: /seller\nDisallow: /admin\nDisallow: /transporter\nDisallow: /login\nDisallow: /signup\nDisallow: /forgot-password\nSitemap: https://buildmatrix-8i2z.onrender.com/sitemap.xml\n",
+        f"User-agent: *\nAllow: /\nDisallow: /buyer\nDisallow: /seller\nDisallow: /admin\nDisallow: /transporter\nDisallow: /login\nDisallow: /signup\nDisallow: /forgot-password\nSitemap: {base}/sitemap.xml\n",
         media_type="text/plain"
     )
 
 @app.get("/sitemap.xml")
-async def sitemap():
-    xml = """<?xml version="1.0" encoding="UTF-8"?>
+async def sitemap(request:Request):
+    base=str(request.base_url).rstrip("/")
+    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://buildmatrix-8i2z.onrender.com/</loc></url>
-  <url><loc>https://buildmatrix-8i2z.onrender.com/marketplace</loc></url>
-  <url><loc>https://buildmatrix-8i2z.onrender.com/categories</loc></url>
-  <url><loc>https://buildmatrix-8i2z.onrender.com/about</loc></url>
-  <url><loc>https://buildmatrix-8i2z.onrender.com/contact</loc></url>
+  <url><loc>{base}/</loc></url>
+  <url><loc>{base}/marketplace</loc></url>
+  <url><loc>{base}/categories</loc></url>
+  <url><loc>{base}/about</loc></url>
+  <url><loc>{base}/contact</loc></url>
 </urlset>"""
     return Response(content=xml, media_type="application/xml")
 
@@ -310,7 +312,7 @@ async def spa(full_path:str, request:Request):
 <link rel="apple-touch-icon" href="{base}/logo.svg">
 <meta name="description" content="BuildMatrix is a construction materials marketplace connecting buyers with sellers and construction supply services.">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-<link rel="canonical" href="https://buildmatrix-8i2z.onrender.com/">
+<link rel="canonical" href="{base}/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BuildMatrix">
 <meta property="og:title" content="BuildMatrix | Construction Materials Marketplace">
