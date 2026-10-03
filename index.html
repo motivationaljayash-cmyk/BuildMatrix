@@ -1,23 +1,345 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Unfolding Rules of Power — Creator Portal</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
-:root{--bg:#090909;--card:#121212;--line:#292929;--text:#f5f5f5;--muted:#9b9b9b;--red:#e11;--green:#36d982}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#191919,#090909 48%);color:var(--text);font:15px Arial,sans-serif}.wrap{max-width:1100px;margin:auto;padding:28px}.nav{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:0 0 18px}.brand{font-weight:800;letter-spacing:.08em}.hero{text-align:center;padding:75px 10px 45px}.eyebrow{color:#f22;letter-spacing:.2em;font-size:12px;font-weight:800}.hero h1{font:800 clamp(42px,8vw,82px)/.95 Georgia,serif;margin:15px 0}.hero p{max-width:650px;margin:20px auto;color:var(--muted);font-size:18px;line-height:1.55}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:rgba(18,18,18,.92);border:1px solid var(--line);border-radius:18px;padding:20px}.stat{font-size:30px;font-weight:800}.label,.muted{color:var(--muted)}.section{margin:22px 0}.two{display:grid;grid-template-columns:1.3fr .7fr;gap:18px}.input,.btn{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #383838;background:#0d0d0d;color:#fff}.btn{background:#e21b1b;border-color:#e21b1b;font-weight:800;cursor:pointer}.pill{border:1px solid #333;border-radius:999px;padding:9px 14px;background:transparent;color:#ddd;cursor:pointer}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:12px 9px;border-bottom:1px solid var(--line);font-size:13px}.ok{color:var(--green)}.hide{display:none!important}.msg{margin-top:14px;color:#ff7777;min-height:20px}.small{font-size:12px}@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}@media(max-width:520px){.grid{grid-template-columns:1fr}.wrap{padding:18px}.table{display:block;overflow:auto}}
-</style></head><body><main class="wrap"><nav class="nav"><div class="brand">UNFOLDING RULES OF POWER</div><div id="nav"></div></nav><div id="app"></div></main><script>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>Unfolding Rules of Power — Creator Partner Portal</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#070707;--panel:#111;--panel2:#151515;--line:#282828;--text:#f6f6f6;--muted:#9c9c9c;--red:#e11d2e;--red2:#ff4757;--green:#35d07f;--amber:#f4b942;--blue:#67a7ff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at top,#1a1a1a 0,#090909 46%,#060606 100%);color:var(--text);font:15px Inter,Arial,sans-serif;min-height:100vh}.wrap{max-width:1180px;margin:auto;padding:22px 20px 60px}.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:0 0 16px;position:sticky;top:0;background:rgba(7,7,7,.92);backdrop-filter:blur(12px);z-index:20}.brand{font-weight:900;letter-spacing:.08em;font-size:13px}.nav-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.pill,.btn,.icon-btn{border:1px solid #353535;background:#101010;color:#eee;border-radius:11px;padding:10px 14px;cursor:pointer;font-weight:700}.btn{background:var(--red);border-color:var(--red)}.btn.secondary{background:#1a1a1a;border-color:#353535}.btn.success{background:#176f48;border-color:#176f48}.btn:disabled{opacity:.45;cursor:not-allowed}.hero{text-align:center;padding:72px 10px 45px}.eyebrow{color:#ff4a5a;letter-spacing:.2em;font-size:11px;font-weight:900}.hero h1{font:900 clamp(42px,8vw,82px)/.95 Georgia,serif;margin:15px 0}.hero p{max-width:730px;margin:22px auto;color:var(--muted);font-size:18px;line-height:1.6}.hero-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.hero-book{max-width:720px;margin:25px auto 0;padding:16px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(140deg,#171717,#0c0c0c);text-align:left}.hero-book strong{font-size:18px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:rgba(17,17,17,.94);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 12px 30px rgba(0,0,0,.16)}.stat{font-size:30px;font-weight:900}.label,.muted{color:var(--muted)}.section{margin:22px 0}.section-title{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:12px}.section-title h2{margin:0}.two{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.input,.select{width:100%;padding:12px 14px;border-radius:11px;border:1px solid #383838;background:#0c0c0c;color:#fff}.textarea{min-height:140px;resize:vertical}.small{font-size:12px}.msg{margin-top:13px;min-height:20px;color:#ff7b85}.ok{color:var(--green)}.warn{color:var(--amber)}.danger{color:#ff7070}.progress{height:10px;background:#232323;border-radius:999px;overflow:hidden}.progress>div{height:100%;background:var(--red);border-radius:999px}.linkbox{display:flex;gap:8px}.linkbox .input{flex:1}.stack{display:grid;gap:10px}.list{display:grid;gap:10px}.item{padding:14px;border:1px solid #242424;border-radius:14px;background:#0d0d0d}.row{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;border:1px solid #333;font-size:11px;font-weight:800}.dot{width:7px;height:7px;border-radius:50%;background:#777}.badge.green .dot{background:var(--green)}.badge.amber .dot{background:var(--amber)}.badge.blue .dot{background:var(--blue)}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:680px}.table th,.table td{text-align:left;padding:12px 9px;border-bottom:1px solid #242424;font-size:13px}.empty{padding:20px;text-align:center;color:var(--muted);border:1px dashed #333;border-radius:14px}.faq details{border:1px solid #242424;border-radius:12px;padding:13px 14px;background:#0e0e0e;margin:8px 0}.faq summary{cursor:pointer;font-weight:800}.toast{position:fixed;right:18px;bottom:18px;background:#151515;border:1px solid #333;color:#fff;padding:13px 16px;border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.35);z-index:100;display:none}.toast.show{display:block}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;z-index:90;padding:20px}.overlay.show{display:flex}.modal{width:min(560px,100%);background:#111;border:1px solid #333;border-radius:20px;padding:24px}.hide{display:none!important}.center{text-align:center}.rank{font-size:24px;font-weight:900}.share-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.step{position:relative}.step-num{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--red);font-weight:900;margin-bottom:10px}.notice{padding:14px;border-radius:14px;border:1px solid #3a2b0e;background:#171309}.successbox{padding:14px;border-radius:14px;border:1px solid #184a35;background:#0d1913}.dangerbox{padding:14px;border-radius:14px;border:1px solid #5b2228;background:#1b0e10}.footer{padding:30px 0 0;color:#686868;font-size:12px;text-align:center}@media(max-width:900px){.grid,.grid3,.three{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}@media(max-width:620px){.wrap{padding:14px 12px 45px}.nav{align-items:flex-start;flex-direction:column}.nav-actions{width:100%}.hero{padding:46px 6px 30px}.hero h1{font-size:48px}.grid,.grid3,.three,.share-grid{grid-template-columns:1fr}.linkbox{flex-direction:column}.table{min-width:620px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<nav class="nav"><div class="brand">UNFOLDING RULES OF POWER</div><div id="nav" class="nav-actions"></div></nav>
+<div id="app"></div>
+</main>
+<div id="toast" class="toast"></div>
+<div id="errorOverlay" class="overlay"><div class="modal"><div class="eyebrow">CREATOR PORTAL</div><h2>Something went wrong</h2><p class="muted">The portal hit a temporary problem. Your account and earnings data are safe. Try refreshing the page.</p><button class="btn" onclick="location.reload()">Refresh page</button></div></div>
+<script>
 const SUPABASE_URL="https://ozrnsjalpyawbyacgzfe.supabase.co";
 const SUPABASE_KEY=atob("c2JfcHVibGlzaGFibGVfWG43a3N0ck5GUlhGaVo4VHFwWXg3d19pV0VRazNSUg==");
 const AMAZON="https://www.amazon.in/dp/B0HK6B59PL";
-const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);const $=id=>document.getElementById(id);const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-async function nav(){const {data:{user}}=await sb.auth.getUser();if(!user){$("nav").innerHTML='<button class="pill" onclick="showHome()">Home</button> <button class="pill" onclick="showAuth()">Creator Login</button>';return}const {data:p}=await sb.from("affiliate_profiles").select("role,name").eq("id",user.id).maybeSingle();let h='<button class="pill" onclick="showHome()">Home</button> <button class="pill" onclick="showDashboard()">Dashboard</button>';if(p?.role==="admin")h+=' <button class="pill" onclick="showAdmin()">Admin</button>';h+=' <button class="pill" onclick="signout()">Logout</button>';$("nav").innerHTML=h}
-async function showHome(){await nav();const {data:{user}}=await sb.auth.getUser();$("app").innerHTML='<section class="hero"><div class="eyebrow">CREATOR PARTNER PROGRAM</div><h1>Turn influence<br>into earnings.</h1><p>Share your personal referral link for <b>Unfolding Rules of Power</b>, track clicks and verified sales, and request your commission payout from one simple dashboard.</p><button class="btn" style="width:auto" onclick="'+(user?"showDashboard()":"showAuth()")+'">'+(user?"Open dashboard":"Join / Login")+'</button></section><section class="grid"><div class="card"><div class="stat">20%</div><div class="label">Commission rate</div></div><div class="card"><div class="stat">2 days</div><div class="label">Payout processing</div></div><div class="card"><div class="stat">Live</div><div class="label">Click tracking</div></div><div class="card"><div class="stat">₹100</div><div class="label">Minimum withdrawal</div></div></section>'}
-async function showAuth(){signup=false;await nav();$("app").innerHTML='<section class="card" style="max-width:470px;margin:70px auto"><div class="eyebrow">CREATOR PORTAL</div><h1 id="authTitle">Welcome back</h1><p class="muted" id="authSub">Sign in to see clicks, verified sales, earnings and withdrawals.</p><input id="email" class="input" placeholder="Email"><br><br><input id="password" class="input" type="password" placeholder="Password"><br><br><input id="name" class="input hide" placeholder="Creator name"><br id="namebr" class="hide"><button class="btn" onclick="submitAuth()">Login</button><p class="msg" id="msg"></p><button class="pill" onclick="toggleSignup()">New creator? Sign up</button></section>'}
-let signup=false;function toggleSignup(){signup=!signup;$("authTitle").textContent=signup?"Create account":"Welcome back";$("authSub").textContent=signup?"Create your creator account and get your personal referral link.":"Sign in to see clicks, verified sales, earnings and withdrawals.";$("name").classList.toggle("hide",!signup);$("namebr").classList.toggle("hide",!signup);document.querySelector("#app .btn").textContent=signup?"Create account":"Login"}
-async function submitAuth(){$("msg").textContent="Working…";const email=$("email").value.trim(),password=$("password").value,name=($("name").value||"Creator").trim();let r=signup?await sb.auth.signUp({email,password}):await sb.auth.signInWithPassword({email,password});if(r.error){$("msg").textContent=r.error.message;return}if(signup&&r.data.user){const q=await sb.rpc("ensure_affiliate_profile",{p_name:name,p_upi_id:null});if(q.error){$("msg").textContent=q.error.message;return}}await refreshRole()}
-async function savePaymentDetails(){const value=$("payment").value.trim();if(!value){alert("Enter your UPI ID or bank account number.");return}const {data:{user}}=await sb.auth.getUser();if(!user)return showAuth();const r=await sb.from("affiliate_profiles").update({upi_id:value}).eq("id",user.id);alert(r.error?r.error.message:"Payment details saved.");if(!r.error)showDashboard()}
-async function showDashboard(){const {data:{user}}=await sb.auth.getUser();if(!user)return showAuth();const r=await sb.rpc("affiliate_dashboard");if(r.error){$("app").innerHTML='<div class="card">'+esc(r.error.message)+'</div>';return}const d=r.data;await nav();const link=location.origin+"/?ref="+encodeURIComponent(d.link.code);$("app").innerHTML='<section class="section"><h1>Welcome, '+esc(d.affiliate.name)+'</h1><p class="muted">Commission rate: <b>20%</b></p></section><section class="grid"><div class="card"><div class="stat">'+d.stats.clicks+'</div><div class="label">Clicks</div></div><div class="card"><div class="stat">'+d.stats.sales+'</div><div class="label">Verified sales</div></div><div class="card"><div class="stat">₹'+Number(d.stats.earned).toFixed(2)+'</div><div class="label">Total earned</div></div><div class="card"><div class="stat">₹'+Number(d.stats.available).toFixed(2)+'</div><div class="label">Available</div></div></section><section class="two section"><div class="card"><h2>Your referral link</h2><input id="ref" class="input" readonly value="'+esc(link)+'"><p class="muted small">Clicks are tracked automatically. Sales are credited after Amazon Attribution verification is connected.</p><button class="btn" onclick="navigator.clipboard.writeText(document.getElementById(\'ref\').value)">Copy link</button></div><div class="card"><h2>Withdraw</h2><p class="muted">Minimum ₹100. Requested payouts become eligible after 2 days.</p><button class="btn" '+(Number(d.stats.available)<100?"disabled":"")+' onclick="withdraw()">Request withdrawal</button></div></section><section class="card section"><h2>💰 Where should we send your earnings?</h2><p class="muted">Enter your UPI ID or Bank Account Number where you would like to receive your commission.</p><input id="payment" class="input" placeholder="UPI ID or Bank Account Number" value="'+esc(d.affiliate.upi_id||"")+'"><br><br><p class="muted small">🔒 Your payment details are kept private and used only to process your earnings.</p><button class="btn" onclick="savePaymentDetails()">Save payment details</button></section><section class="card section"><h2>Recent sales</h2><table class="table"><thead><tr><th>Date</th><th>Order</th><th>Sale</th><th>Commission</th><th>Status</th></tr></thead><tbody>'+(d.sales||[]).map(s=>'<tr><td>'+new Date(s.created_at).toLocaleDateString()+'</td><td>'+esc(s.external_order_ref||"—")+'</td><td>₹'+s.sale_amount+'</td><td>₹'+s.commission_amount+'</td><td class="ok">'+esc(s.status)+'</td></tr>').join("")+'</tbody></table></section>'}
-async function withdraw(){const r=await sb.rpc("request_affiliate_withdrawal");alert(r.error?r.error.message:"Withdrawal requested. It becomes payable after 2 days.");if(!r.error)showDashboard()}async function signout(){await sb.auth.signOut();await showHome()}
-async function saveAttribution(id){const tag=$("tag-"+id).value.trim(),publisher=$("pub-"+id).value.trim(),url=$("url-"+id).value.trim();if(!url){alert("Paste the Amazon Attribution destination/tagged URL first.");return}const r=await sb.rpc("admin_upsert_attribution_tag",{p_affiliate_id:id,p_tag_id:tag||null,p_publisher_id:publisher||null,p_destination_url:url,p_asin:"B0HK6B59PL"});alert(r.error?r.error.message:"Amazon Attribution mapping saved. The creator's live referral redirect was updated.");if(!r.error)showAdmin()}
-async function runAmazonSync(){try{const r=await sb.functions.invoke("amazon-attribution-sync",{body:{mode:"sync"}});if(r.error){alert(r.error.message);return}const d=r.data||{};alert(d.status==="not_configured"?"Amazon Attribution API access is not configured yet. The database and portal are ready; the Amazon API credentials/access still need to be added as Supabase Edge Function secrets.":("Amazon sync result: "+JSON.stringify(d)));await showAdmin()}catch(e){alert("Sync request failed: "+e.message)}}
-async function showAdmin(){const {data:{user}}=await sb.auth.getUser();if(!user)return showAuth();const {data:profile}=await sb.from("affiliate_profiles").select("role").eq("id",user.id).maybeSingle();if(profile?.role!=="admin"){alert("Admin access required.");return showDashboard()}const r=await sb.rpc("admin_affiliate_overview");if(r.error){alert(r.error.message);return}const a=await sb.rpc("admin_attribution_overview");if(a.error){alert(a.error.message);return}await nav();$("app").innerHTML='<section class="card section"><div class="eyebrow">AMAZON ATTRIBUTION</div><h1>Automatic conversion syncing</h1><p class="muted">Amazon Attribution is the measurement layer for external creator/influencer traffic. Amazon documents purchases, units sold and product sales, with reporting dimensions including publisher, order and product ASIN, and a 14-day attribution window.</p><div class="grid"><div class="card"><div class="stat">Ready</div><div class="label">Database mapping</div></div><div class="card"><div class="stat">'+a.data.filter(x=>x.mapped).length+'</div><div class="label">Creators mapped</div></div><div class="card"><div class="stat">API</div><div class="label">Connection pending</div></div><div class="card"><div class="stat">14d</div><div class="label">Attribution window</div></div></div><br><button class="btn" onclick="runAmazonSync()">Sync Amazon conversions</button><p class="muted small">Amazon secrets stay server-side in Supabase; nothing sensitive is placed in this browser page.</p></section><section class="card section"><h2>Creator attribution mapping</h2><p class="muted small">Create one Amazon Attribution tag/campaign per creator and paste the Amazon-generated destination URL here. Saving it also changes that creator&apos;s referral redirect.</p><table class="table"><thead><tr><th>Creator</th><th>Creator link</th><th>Attribution tag ID</th><th>Publisher</th><th>Amazon destination URL</th><th></th></tr></thead><tbody>'+a.data.map(x=>'<tr><td>'+esc(x.name)+'</td><td class="small">'+esc(x.code||"—")+'</td><td><input id="tag-'+x.affiliate_id+'" class="input" value="'+esc(x.tag_id||"")+'" placeholder="Tag ID"></td><td><input id="pub-'+x.affiliate_id+'" class="input" value="'+esc(x.publisher_id||"")+'" placeholder="Publisher ID"></td><td><input id="url-'+x.affiliate_id+'" class="input" value="'+esc(x.destination_url||AMAZON)+'" placeholder="Amazon Attribution URL"></td><td><button class="pill" onclick="saveAttribution(\''+x.affiliate_id+'\')">Save</button></td></tr>').join("")+'</tbody></table></section><section class="card section"><h2>Manual fallback</h2><p class="muted small">Use this only for a sale you have independently verified. Choose the creator instead of copying an Affiliate ID.</p><select id="aid" class="input"><option value="">Select creator</option>'+r.data.map(x=>'<option value="'+esc(x.affiliate_id)+'">'+esc(x.name)+' — '+esc(x.affiliate_id)+'</option>').join("")+'</select><br><br><div class="two"><input id="amt" class="input" type="number" min="0.01" step="0.01" placeholder="Sale amount ₹"><input id="ord" class="input" placeholder="Amazon/order reference (optional)"></div><br><button class="btn" onclick="recordSale()">Add verified sale</button></section><section class="card section"><table class="table"><thead><tr><th>Creator</th><th>ID</th><th>Clicks</th><th>Sales</th><th>Earned</th><th>Withdrawal</th><th></th></tr></thead><tbody>'+r.data.map(x=>'<tr><td>'+esc(x.name)+'</td><td class="small">'+esc(x.affiliate_id)+'</td><td>'+x.clicks+'</td><td>'+x.sales+'</td><td>₹'+x.earned+'</td><td>'+esc(x.withdrawal_status||"—")+'</td><td>'+(x.withdrawal_id&&x.withdrawal_status==="requested"?'<button class="pill" onclick="approve(\''+x.withdrawal_id+'\')">Mark paid</button>':"—")+'</td></tr>').join("")+'</tbody></table></section>'}
-async function recordSale(){const affiliateId=$("aid").value;if(!affiliateId){alert("Select a creator first.");return}const amount=Number($("amt").value);if(!Number.isFinite(amount)||amount<=0){alert("Enter a valid sale amount.");return}const order=$("ord").value.trim();const r=await sb.rpc("admin_record_conversion",{p_affiliate_id:affiliateId,p_sale_amount:amount,p_external_order_ref:order||null});alert(r.error?r.error.message:"Verified sale recorded.");if(!r.error)showAdmin()}async function approve(id){const r=await sb.rpc("admin_approve_withdrawal",{p_withdrawal_id:id});alert(r.error?r.error.message:"Marked paid.");if(!r.error)showAdmin()}
-async function refreshRole(){await nav();const {data:{user}}=await sb.auth.getUser();if(!user)return showHome();const {data:p}=await sb.from("affiliate_profiles").select("role").eq("id",user.id).maybeSingle();return p?.role==="admin"?showAdmin():showDashboard()}
-async function handleReferral(){const ref=new URLSearchParams(location.search).get("ref");if(!ref)return false;let token=localStorage.getItem("urp_visitor");if(!token){token=crypto.randomUUID();localStorage.setItem("urp_visitor",token)}const r=await sb.rpc("record_referral_click",{p_code:ref,p_visitor_token:token,p_ip:null,p_user_agent:navigator.userAgent,p_referrer:document.referrer||null});window.location.replace((r.data&&r.data.url)||AMAZON);return true}
-(async()=>{if(await handleReferral())return;const {data:{user}}=await sb.auth.getUser();if(user)await refreshRole();else await showHome();sb.auth.onAuthStateChange((_event,session)=>{if(session?.user)refreshRole();else showHome()})})();
-</script></body></html>
+const BOOK_NAME="Unfolding Rules of Power";
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=function(id){return document.getElementById(id)};
+const esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]})};
+let signup=false,state=null,refreshTimer=null,authListener=null;
+
+function toast(message){
+  $("toast").textContent=message;
+  $("toast").classList.add("show");
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer=setTimeout(function(){$("toast").classList.remove("show")},2500);
+}
+function fatalError(){$("errorOverlay").classList.add("show")}
+window.addEventListener("error",function(){fatalError()});
+window.addEventListener("unhandledrejection",function(){fatalError()});
+function referralUrl(code){return location.origin+"/?ref="+encodeURIComponent(code)}
+function formatMoney(v){return "₹"+Number(v||0).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function formatDate(v){return v?new Date(v).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):"—"}
+function timeLeft(v){
+  if(!v)return "";
+  const ms=new Date(v).getTime()-Date.now();
+  if(ms<=0)return "Eligible now";
+  const d=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000);
+  return d>0?d+" day"+(d===1?"":"s")+" remaining":h+" hour"+(h===1?"":"s")+" remaining";
+}
+function statusBadge(status){
+  const s=String(status||"").toLowerCase();
+  const c=s==="paid"||s==="approved"||s==="success"?"green":s==="requested"||s==="pending"||s==="partial"?"amber":"blue";
+  return '<span class="badge '+c+'"><span class="dot"></span>'+esc(status||"info")+"</span>";
+}
+
+async function getUser(){
+  const r=await sb.auth.getUser();
+  if(r.error)throw r.error;
+  return r.data.user;
+}
+async function nav(){
+  const user=await getUser();
+  if(!user){
+    $("nav").innerHTML='<button class="pill" onclick="showHome()">Home</button><button class="pill" onclick="showAuth()">Creator Login</button>';
+    return;
+  }
+  const p=await sb.from("affiliate_profiles").select("role,name").eq("id",user.id).maybeSingle();
+  let h='<button class="pill" onclick="showHome()">Home</button><button class="pill" onclick="showDashboard()">Dashboard</button>';
+  if(p.data&&p.data.role==="admin")h+='<button class="pill" onclick="showAdmin()">Admin</button>';
+  h+='<button class="pill" onclick="showHelp()">Help</button><button class="pill" onclick="signout()">Logout</button>';
+  $("nav").innerHTML=h;
+}
+async function showHome(){
+  try{
+    await nav();
+    const user=await getUser();
+    const open=user?"showDashboard()":"showAuth()";
+    $("app").innerHTML=
+      '<section class="hero"><div class="eyebrow">CREATOR PARTNER PROGRAM</div><h1>Turn influence<br>into earnings.</h1><p>Share your personal link for <b>'+BOOK_NAME+'</b>, see your clicks, follow verified sales, and request your commission from one simple creator dashboard.</p><div class="hero-actions"><button class="btn" onclick="'+open+'">'+(user?"Open creator dashboard":"Join the creator program")+'</button><button class="btn secondary" onclick="openBook()">View book on Amazon</button></div><div class="hero-book"><strong>'+BOOK_NAME+'</strong><div class="muted small" style="margin-top:6px">20% creator commission on verified book sales · ₹100 minimum withdrawal · payout eligibility after 2 days</div></div></section>'+
+      '<section class="grid section"><div class="card"><div class="stat">20%</div><div class="label">Creator commission</div></div><div class="card"><div class="stat">₹100</div><div class="label">Minimum withdrawal</div></div><div class="card"><div class="stat">Live</div><div class="label">Link click tracking</div></div><div class="card"><div class="stat">2 days</div><div class="label">Payout eligibility</div></div></section>'+
+      '<section class="section"><div class="section-title"><h2>How it works</h2></div><div class="grid"><div class="card step"><div class="step-num">1</div><b>Join</b><p class="muted">Create your creator account and get a unique referral link.</p></div><div class="card step"><div class="step-num">2</div><b>Share</b><p class="muted">Post it on Instagram, YouTube, WhatsApp, Telegram or anywhere you create.</p></div><div class="card step"><div class="step-num">3</div><b>Earn</b><p class="muted">Verified book sales add your 20% creator commission to your balance.</p></div><div class="card step"><div class="step-num">4</div><b>Withdraw</b><p class="muted">Reach ₹100, add payout details, then request a withdrawal.</p></div></div></section>'+
+      '<section class="card section"><div class="section-title"><h2>Creator-ready tools</h2></div><div class="grid3"><div><b>🔗 Personal referral link</b><p class="muted small">Copy or share it in seconds.</p></div><div><b>📣 Promotion kit</b><p class="muted small">Ready-made captions, scripts and messages.</p></div><div><b>📊 Analytics</b><p class="muted small">Track clicks, sales and recent earnings.</p></div></div></section><div id="homeFaq"></div>';
+    renderFaq("homeFaq");
+  }catch(e){showError(e)}
+}
+function renderFaq(target){
+  $(target).innerHTML='<section class="faq section"><div class="section-title"><h2>Common questions</h2></div><details><summary>How do I earn?</summary><p class="muted">You share your personal referral link. A commission is added when a book sale is independently verified for your referral.</p></details><details><summary>Does every click become a sale?</summary><p class="muted">No. Clicks measure traffic; only verified purchases are counted as sales and commissions.</p></details><details><summary>When can I withdraw?</summary><p class="muted">The minimum withdrawal is ₹100. After you request a payout, it becomes eligible after 2 days for processing.</p></details><details><summary>How are sales verified?</summary><p class="muted">When Amazon Attribution is connected, imported attribution data can verify sales. Until that connection is active, verified sales may be added manually by the program admin.</p></details><details><summary>Where can I promote?</summary><p class="muted">Use your link wherever your audience is allowed to receive promotional content. The dashboard includes platform-ready copy you can adapt.</p></details></section>';
+}
+async function showAuth(){
+  signup=false;
+  await nav();
+  $("app").innerHTML='<section class="card" style="max-width:470px;margin:70px auto"><div class="eyebrow">CREATOR PORTAL</div><h1 id="authTitle">Welcome back</h1><p class="muted" id="authSub">Sign in to see your clicks, verified sales, earnings and payouts.</p><input id="email" class="input" placeholder="Email" autocomplete="email"><br><br><input id="password" class="input" type="password" placeholder="Password" autocomplete="current-password"><br><br><input id="name" class="input hide" placeholder="Creator name" autocomplete="name"><br><br id="namebr" class="hide"><button class="btn" id="authButton" onclick="submitAuth()">Login</button><p class="msg" id="msg"></p><div class="row"><button class="pill" onclick="toggleSignup()">New creator? Sign up</button><button class="pill" onclick="sendReset()">Forgot password?</button></div></section>';
+}
+function toggleSignup(){
+  signup=!signup;
+  $("authTitle").textContent=signup?"Create your account":"Welcome back";
+  $("authSub").textContent=signup?"Create your creator account and get your personal referral link.":"Sign in to see your clicks, verified sales, earnings and payouts.";
+  $("name").classList.toggle("hide",!signup);
+  $("namebr").classList.toggle("hide",!signup);
+  $("authButton").textContent=signup?"Create account":"Login";
+}
+async function submitAuth(){
+  try{
+    $("msg").textContent="Working…";
+    const email=$("email").value.trim(),password=$("password").value,name=($("name").value||"Creator").trim();
+    if(!email||!password){$("msg").textContent="Enter your email and password.";return}
+    let r;
+    if(signup)r=await sb.auth.signUp({email,password,options:{data:{name:name}}});
+    else r=await sb.auth.signInWithPassword({email,password});
+    if(r.error){$("msg").textContent=r.error.message;return}
+    if(signup&&!r.data.session){$("msg").textContent="Account created. Check your email to confirm your account, then log in.";return}
+    if(signup&&r.data.user){
+      const q=await sb.rpc("ensure_affiliate_profile",{p_name:name,p_upi_id:null});
+      if(q.error){$("msg").textContent=q.error.message;return}
+    }
+    await refreshRole();
+  }catch(e){showError(e)}
+}
+async function sendReset(){
+  try{
+    const email=$("email").value.trim();
+    if(!email){$("msg").textContent="Enter your email first.";return}
+    const r=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin});
+    $("msg").textContent=r.error?r.error.message:"Password reset instructions sent if that email is registered.";
+  }catch(e){showError(e)}
+}
+async function refreshRole(){
+  const user=await getUser();
+  if(!user){await showHome();return}
+  const p=await sb.from("affiliate_profiles").select("role").eq("id",user.id).maybeSingle();
+  if(p.data&&p.data.role==="admin"){await showAdmin();return}
+  await showDashboard();
+}
+function shareText(){return "I recommend "+BOOK_NAME+". Check it out here: "+referralUrl(state.link.code)}
+async function copyTextValue(value){
+  try{await navigator.clipboard.writeText(value);toast("Copied to clipboard")}
+  catch(e){const ta=document.createElement("textarea");ta.value=value;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();toast("Copied to clipboard")}
+}
+function copyData(btn){copyTextValue(btn.getAttribute("data-copy")||"")}
+async function shareLink(){
+  const url=referralUrl(state.link.code);
+  if(navigator.share){try{await navigator.share({title:BOOK_NAME,text:"Check out "+BOOK_NAME,url:url});return}catch(e){}}
+  await copyTextValue(url);
+}
+function openBook(){window.open(AMAZON,"_blank","noopener")}
+function shareWhatsApp(){window.open("https://wa.me/?text="+encodeURIComponent(shareText()),"_blank","noopener")}
+function shareTelegram(){window.open("https://t.me/share/url?url="+encodeURIComponent(referralUrl(state.link.code))+"&text="+encodeURIComponent("Check out "+BOOK_NAME),"_blank","noopener")}
+function nextMilestone(sales){
+  const targets=[1,5,10,25,50,100];
+  let n=targets.find(function(x){return sales<x});if(!n)n=100;
+  return {text:sales<n?n+" verified sales":"100+ verified sales",pct:Math.min(100,Math.round((sales/n)*100))};
+}
+async function showDashboard(){
+  try{
+    const user=await getUser();if(!user){await showAuth();return}
+    const r=await sb.rpc("affiliate_dashboard");if(r.error)throw r.error;
+    state=r.data;await nav();renderDashboard();
+    clearInterval(refreshTimer);refreshTimer=setInterval(function(){loadDashboardSilently()},60000);
+  }catch(e){showError(e)}
+}
+async function loadDashboardSilently(){
+  try{const r=await sb.rpc("affiliate_dashboard");if(!r.error){state=r.data;renderDashboard()}}catch(e){}
+}
+function renderDashboard(){
+  const d=state,st=d.stats||{},ver=d.verification||{},payout=(d.withdrawals||[])[0],url=referralUrl(d.link.code),ms=nextMilestone(Number(st.sales||0)),unread=Number(d.unread_notifications||0),mappingReady=!!ver.mapping_ready,apiReady=!!ver.api_ready,autoReady=mappingReady&&apiReady;
+  let html=[];
+  html.push('<section class="section"><div class="row"><div><div class="eyebrow">CREATOR DASHBOARD</div><h1 style="margin:8px 0">Welcome, '+esc(d.affiliate.name)+'</h1><p class="muted">Everything you need to share, track and get paid.</p></div><div class="row"><span class="badge '+(unread>0?"amber":"green")+'"><span class="dot"></span>'+unread+' new notification'+(unread===1?"":"s")+'</span><button class="pill" onclick="markNotificationsRead()">Mark read</button></div></div></section>');
+  html.push('<section class="grid section"><div class="card"><div class="stat">'+Number(st.clicks||0).toLocaleString("en-IN")+'</div><div class="label">Link clicks</div><div class="muted small" style="margin-top:5px">'+Number(st.clicks_7d||0)+' in last 7 days</div></div><div class="card"><div class="stat">'+Number(st.sales||0)+'</div><div class="label">Verified sales</div><div class="muted small" style="margin-top:5px">'+Number(st.pending_sales||0)+' pending verification</div></div><div class="card"><div class="stat">'+formatMoney(st.earned)+'</div><div class="label">Total earned</div><div class="muted small" style="margin-top:5px">'+formatMoney(st.earned_30d)+' in last 30 days</div></div><div class="card"><div class="stat">'+formatMoney(st.available)+'</div><div class="label">Available to withdraw</div><div class="muted small" style="margin-top:5px">Minimum '+formatMoney(100)+'</div></div></section>');
+  if(!localStorage.getItem("urp_creator_onboarded_v2")){
+    html.push('<section class="card section"><div class="section-title"><h2>👋 Start here</h2><button class="pill" onclick="dismissOnboarding()">Got it</button></div><div class="grid"><div><b>1. Copy your link</b><p class="muted small">Your personal referral link is ready below.</p></div><div><b>2. Share it</b><p class="muted small">Use the ready-made creator kit for your platforms.</p></div><div><b>3. Watch your stats</b><p class="muted small">Clicks are tracked automatically. Verified sales add commission.</p></div><div><b>4. Get paid</b><p class="muted small">Reach ₹100, add payout details, then request a withdrawal.</p></div></div></section>');
+  }
+  html.push('<section class="card section '+(autoReady?"successbox":"notice")+'"><div class="row"><div><b>'+ (autoReady?"✅ Sales verification connected":"⏳ Sales verification status")+'</b><p class="small muted" style="margin:6px 0 0">'+esc(ver.message||"Sales are added after independent verification.")+'</p></div><div class="stack"><span class="badge '+(mappingReady?"green":"amber")+'"><span class="dot"></span>Attribution mapping '+(mappingReady?"ready":"pending")+'</span><span class="badge '+(apiReady?"green":"amber")+'"><span class="dot"></span>Sync '+(apiReady?"connected":"not connected")+'</span></div></div></section>');
+  html.push('<section class="two section"><div class="card"><div class="section-title"><h2>🔗 Your personal referral link</h2><button class="pill" onclick="openBook()">View book</button></div><div class="linkbox"><input class="input" readonly value="'+esc(url)+'"><button class="btn" data-copy="'+esc(url)+'" onclick="copyData(this)">Copy</button></div><div class="row" style="margin-top:10px"><span class="muted small">Share this exact link so your traffic is credited to you.</span><button class="btn secondary" onclick="shareLink()">Share</button></div></div><div class="card"><h2>🎯 Earnings milestone</h2><div class="row"><b>'+esc(ms.text)+'</b><span class="muted small">'+Number(st.sales||0)+' sales</span></div><div class="progress" style="margin-top:12px"><div style="width:'+ms.pct+'%"></div></div><p class="muted small" style="margin-bottom:0">Keep sharing your link to unlock your next milestone.</p></div></section>');
+  html.push('<section class="card section"><div class="section-title"><h2>📣 Promote the book</h2><span class="muted small">Ready to copy</span></div><div class="share-grid"><button class="btn" onclick="copyPromotion('caption')">Instagram caption</button><button class="btn secondary" onclick="copyPromotion('youtube')">YouTube description</button><button class="btn secondary" onclick="copyPromotion('whatsapp')">WhatsApp message</button><button class="btn secondary" onclick="copyPromotion('reel')">30-sec Reel script</button><button class="btn secondary" onclick="shareWhatsApp()">Share WhatsApp</button><button class="btn secondary" onclick="shareTelegram()">Share Telegram</button></div><p class="muted small" style="margin-bottom:0">Instagram does not support a browser pre-fill link, so the copy button gives you ready text plus your referral link.</p></section>');
+  html.push('<section class="card section"><div class="section-title"><h2>📊 Your analytics</h2></div><div class="grid3"><div><div class="stat">'+Number(st.clicks_30d||0)+'</div><div class="label">Clicks · 30 days</div></div><div><div class="stat">'+Number(st.sales_30d||0)+'</div><div class="label">Sales · 30 days</div></div><div><div class="stat">'+Number(st.conversion_rate||0)+'%</div><div class="label">Overall conversion</div></div></div></section>');
+  html.push('<section class="card section"><div class="section-title"><h2>🔗 Campaign links</h2><span class="muted small">Track where your clicks come from</span></div><div class="two"><div><input id="campaignName" class="input" placeholder="Campaign name e.g. YouTube launch"><br><br><select id="campaignPlatform" class="input"><option value="youtube">YouTube</option><option value="instagram">Instagram</option><option value="whatsapp">WhatsApp</option><option value="telegram">Telegram</option><option value="other">Other</option></select><br><br><button class="btn" onclick="createCampaign()">Create campaign link</button><p class="msg" id="campaignMsg"></p></div><div class="muted small">Create separate links for different channels. Clicks are counted separately so you can see which campaign is driving traffic.</div></div><div class="list" style="margin-top:16px">'+renderCampaigns(d.campaigns||[])+'</div></section>');
+  html.push('<section class="two section"><div class="card"><div class="section-title"><h2>💸 Payout</h2>'+statusBadge(payout?payout.status:"not requested")+'</div><div class="row"><div><div class="stat">'+formatMoney(st.available)+'</div><div class="label">Available balance</div></div><div class="center"><div class="muted small">Minimum</div><b>'+formatMoney(100)+'</b></div></div>'+(payout&&payout.status==="requested"?'<div class="notice" style="margin-top:14px"><b>Requested '+formatMoney(payout.amount)+'</b><div class="muted small" style="margin-top:5px">'+timeLeft(payout.eligible_at)+'</div></div>':'<button class="btn" style="margin-top:14px" '+(Number(st.available)<100?"disabled":"")+' onclick="requestWithdrawal()">Request payout</button>')+'<p class="muted small">Payout eligibility starts 2 days after a request. Payment is sent manually by the program admin.</p></div><div class="card"><h2>📜 Payout history</h2>'+renderWithdrawals(d.withdrawals||[])+'</div></section>');
+  html.push('<section class="card section"><div class="section-title"><h2>💰 Payment details</h2><span class="muted small">Private and used only for your payouts</span></div><p class="muted small">UPI is the simplest option. Choose bank transfer only when you have the full bank details ready.</p><div class="row"><label><input type="radio" name="payMethod" value="upi" '+((d.affiliate.payment_method||"upi")==="upi"?"checked":"")+' onchange="togglePaymentFields()"> UPI</label><label><input type="radio" name="payMethod" value="bank" '+((d.affiliate.payment_method||"upi")==="bank"?"checked":"")+' onchange="togglePaymentFields()"> Bank transfer</label></div><br><div id="upiFields" class="'+((d.affiliate.payment_method||"upi")==="upi"?"":"hide")+'"><input id="upi" class="input" placeholder="UPI ID" value="'+esc(d.affiliate.upi_id||"")+'"></div><div id="bankFields" class="'+((d.affiliate.payment_method||"upi")==="bank"?"":"hide")+'"><div class="two"><input id="bankHolder" class="input" placeholder="Account holder name" value="'+esc(d.affiliate.bank_account_holder||"")+'"><input id="bankName" class="input" placeholder="Bank name" value="'+esc(d.affiliate.bank_name||"")+'"></div><br><div class="two"><input id="bankNumber" class="input" placeholder="Account number" value="'+esc(d.affiliate.bank_account_number||"")+'"><input id="bankIfsc" class="input" placeholder="IFSC" value="'+esc(d.affiliate.bank_ifsc||"")+'"></div></div><br><button class="btn" onclick="savePayment()">Save payment details</button><p class="msg" id="paymentMsg"></p></section>');
+  html.push('<section class="two section"><div class="card"><div class="section-title"><h2>🔔 Notifications</h2><button class="pill" onclick="markNotificationsRead()">Mark all read</button></div>'+renderNotifications(d.notifications||[])+'</div><div class="card"><h2>🏆 Creator leaderboard</h2><p class="muted small">Only creators who opt in are shown publicly inside the portal.</p><label class="row"><span>Show me on the leaderboard</span><input type="checkbox" id="leaderOpt" '+(d.affiliate.leaderboard_opt_in?"checked":"")+' onchange="setLeaderboard(this.checked)"></label><div style="margin-top:14px">'+renderLeaderboard(d.leaderboard||[])+'</div></div></section>');
+  html.push('<section class="card section"><div class="section-title"><h2>❓ Help center</h2><button class="pill" onclick="showHelp()">Open help</button></div><p class="muted">Need to understand a status, payout, or promotion rule? Open the help center for quick answers.</p></section>');
+  html.push('<div class="footer">Creator commission: 20% on verified book sales. Amazon purchase verification is independent from click tracking.</div>');
+  $("app").innerHTML=html.join("");
+}
+function renderCampaigns(items){
+  if(!items.length)return '<div class="empty">No campaign links yet. Create one above for YouTube, Instagram, WhatsApp or another channel.</div>';
+  return items.map(function(x){const url=referralUrl(x.code);return '<div class="item"><div class="row"><div><b>'+esc(x.name)+'</b><div class="muted small">'+esc(x.platform)+' · '+Number(x.clicks||0)+' clicks · '+formatDate(x.created_at)+'</div></div>'+statusBadge(x.active?"active":"inactive")+'</div><div class="linkbox" style="margin-top:10px"><input class="input" readonly value="'+esc(url)+'"><button class="pill" data-copy="'+esc(url)+'" onclick="copyData(this)">Copy</button>'+(x.active?'<button class="pill" data-id="'+esc(x.id)+'" onclick="deactivateCampaign(this.dataset.id)">Stop</button>':"")+'</div></div>'}).join("");
+}
+function renderWithdrawals(items){
+  if(!items.length)return '<div class="empty">No payout requests yet.</div>';
+  return '<div class="list">'+items.map(function(x){return '<div class="item"><div class="row"><b>'+formatMoney(x.amount)+'</b>'+statusBadge(x.status)+'</div><div class="muted small" style="margin-top:6px">Requested '+formatDate(x.requested_at)+(x.status==="requested"?" · "+timeLeft(x.eligible_at):x.paid_at?" · Paid "+formatDate(x.paid_at):"")+'</div>'+(x.payout_reference?'<div class="muted small">Reference: '+esc(x.payout_reference)+'</div>':"")+'</div>'}).join("")+'</div>';
+}
+function renderNotifications(items){
+  if(!items.length)return '<div class="empty">No creator notifications yet.</div>';
+  return '<div class="list">'+items.map(function(x){return '<div class="item"><div class="row"><b>'+esc(x.title)+'</b><span class="muted small">'+formatDate(x.created_at)+'</span></div><div class="muted small" style="margin-top:6px">'+esc(x.message)+'</div></div>'}).join("")+'</div>';
+}
+function renderLeaderboard(items){
+  if(!items.length)return '<div class="empty">No opted-in creators yet. Turn on the switch above to join.</div>';
+  return '<div class="list">'+items.map(function(x){return '<div class="item"><div class="row"><span><span class="rank">#'+x.rank+'</span> <b>'+esc(x.name)+'</b></span><span class="muted small">'+x.sales+' sales · '+formatMoney(x.earned)+'</span></div></div>'}).join("")+'</div>';
+}
+function dismissOnboarding(){localStorage.setItem("urp_creator_onboarded_v2","1");renderDashboard()}
+function copyPromotion(kind){
+  const url=referralUrl(state.link.code);
+  const templates={
+    caption:"I have been exploring "+BOOK_NAME+" and found it worth sharing. If you like psychology, influence and understanding people better, check it out here: "+url,
+    youtube:"Book recommendation: "+BOOK_NAME+"\n\nIf you are interested in psychology, influence and understanding human behavior, you can check it out here:\n"+url,
+    whatsapp:"Sharing a book I think you may enjoy: "+BOOK_NAME+"\n\nCheck it out here: "+url,
+    reel:"Hook: Most people think influence is about speaking louder.\n\nBody: "+BOOK_NAME+" explores the psychology behind influence, behavior and human decisions.\n\nCTA: Check it out here: "+url
+  };
+  copyTextValue(templates[kind]||templates.caption);
+}
+async function createCampaign(){
+  try{
+    const name=$("campaignName").value.trim(),platform=$("campaignPlatform").value;
+    if(!name){$("campaignMsg").textContent="Enter a campaign name.";return}
+    $("campaignMsg").textContent="Creating…";
+    const r=await sb.rpc("create_affiliate_campaign",{p_name:name,p_platform:platform});
+    if(r.error){$("campaignMsg").textContent=r.error.message;return}
+    toast("Campaign created");await loadDashboardSilently();
+  }catch(e){showError(e)}
+}
+async function deactivateCampaign(id){
+  try{
+    if(!confirm("Stop this campaign link?"))return;
+    const r=await sb.rpc("deactivate_affiliate_campaign",{p_campaign_id:id});
+    if(r.error){toast(r.error.message);return}
+    toast("Campaign stopped");await loadDashboardSilently();
+  }catch(e){showError(e)}
+}
+function togglePaymentFields(){
+  const m=document.querySelector("input[name='payMethod']:checked").value;
+  $("upiFields").classList.toggle("hide",m!=="upi");$("bankFields").classList.toggle("hide",m!=="bank");
+}
+async function savePayment(){
+  try{
+    const m=document.querySelector("input[name='payMethod']:checked").value;
+    const r=await sb.rpc("update_affiliate_payment_details",{p_payment_method:m,p_upi_id:m==="upi"?$("upi").value.trim():null,p_bank_account_holder:m==="bank"?$("bankHolder").value.trim():null,p_bank_account_number:m==="bank"?$("bankNumber").value.trim():null,p_bank_ifsc:m==="bank"?$("bankIfsc").value.trim():null,p_bank_name:m==="bank"?$("bankName").value.trim():null});
+    $("paymentMsg").textContent=r.error?r.error.message:"Payment details saved securely.";
+    if(!r.error)toast("Payment details saved");
+  }catch(e){showError(e)}
+}
+async function setLeaderboard(enabled){
+  try{const r=await sb.rpc("set_affiliate_leaderboard_opt_in",{p_enabled:enabled});if(r.error){toast(r.error.message);return}toast(enabled?"Leaderboard opt-in saved":"Leaderboard opt-out saved");await loadDashboardSilently()}catch(e){showError(e)}
+}
+async function markNotificationsRead(){
+  try{const r=await sb.rpc("mark_affiliate_notifications_read");if(r.error){toast(r.error.message);return}await loadDashboardSilently()}catch(e){showError(e)}
+}
+async function requestWithdrawal(){
+  try{
+    if(Number(state.stats.available)<100){toast("You need at least ₹100 available.");return}
+    const r=await sb.rpc("request_affiliate_withdrawal");if(r.error){toast(r.error.message);return}
+    toast("Payout requested. It becomes eligible after 2 days.");await loadDashboardSilently();
+  }catch(e){showError(e)}
+}
+async function showHelp(){
+  try{
+    await nav();
+    $("app").innerHTML='<section class="card section"><div class="eyebrow">HELP CENTER</div><h1>Creator help</h1><p class="muted">Everything important about links, sales, earnings and payouts.</p><div id="helpFaq"></div><div class="successbox" style="margin-top:18px"><b>Need support?</b><p class="muted small">Use the contact method provided by the program owner for payout or account issues.</p></div></section>';
+    renderFaq("helpFaq");
+  }catch(e){showError(e)}
+}
+async function showAdmin(){
+  try{
+    const user=await getUser();if(!user){await showAuth();return}
+    const profile=await sb.from("affiliate_profiles").select("role").eq("id",user.id).maybeSingle();
+    if(profile.data&&profile.data.role!=="admin"){toast("Admin access required");await showDashboard();return}
+    const results=await Promise.all([sb.rpc("admin_attribution_overview"),sb.rpc("admin_affiliate_overview")]);
+    const a=results[0],r=results[1];if(a.error)throw a.error;if(r.error)throw r.error;
+    await nav();
+    const mapped=(a.data||[]).filter(function(x){return x.mapped}).length;
+    $("app").innerHTML='<section class="card section"><div class="eyebrow">ADMIN</div><h1>Creator program control</h1><p class="muted">Manage attribution mapping, verify sales, and process payout requests.</p><div class="grid"><div class="card"><div class="stat">'+r.data.length+'</div><div class="label">Creators</div></div><div class="card"><div class="stat">'+r.data.reduce(function(a,x){return a+Number(x.clicks||0)},0)+'</div><div class="label">Total clicks</div></div><div class="card"><div class="stat">'+r.data.reduce(function(a,x){return a+Number(x.sales||0)},0)+'</div><div class="label">Verified sales</div></div><div class="card"><div class="stat">'+mapped+'</div><div class="label">Attribution mappings</div></div></div></section>'+
+      '<section class="card section"><div class="section-title"><h2>Amazon Attribution</h2><span class="badge amber"><span class="dot"></span>API connection depends on Amazon access</span></div><p class="muted small">Map one Amazon Attribution tag/publisher per creator. The sync function is server-side and only adds commissions when attribution data is verified.</p><button class="btn" onclick="runAmazonSync()">Sync Amazon conversions</button><p id="syncMsg" class="msg"></p></section>'+
+      '<section class="card section"><h2>Creator attribution mapping</h2><div class="table-wrap"><table class="table"><thead><tr><th>Creator</th><th>Code</th><th>Tag ID</th><th>Publisher</th><th>Destination URL</th><th></th></tr></thead><tbody>'+
+      (a.data||[]).map(function(x){return '<tr><td><b>'+esc(x.name)+'</b><div class="muted small">'+esc(x.email)+'</div></td><td>'+esc(x.code||"—")+'</td><td><input id="tag-'+x.affiliate_id+'" class="input" value="'+esc(x.tag_id||"")+'" placeholder="Tag ID"></td><td><input id="pub-'+x.affiliate_id+'" class="input" value="'+esc(x.publisher_id||"")+'" placeholder="Publisher ID"></td><td><input id="url-'+x.affiliate_id+'" class="input" value="'+esc(x.destination_url||AMAZON)+'" placeholder="Amazon Attribution destination"></td><td><button class="pill" data-id="'+esc(x.affiliate_id)+'" onclick="saveAttribution(this.dataset.id)">Save</button></td></tr>'}).join("")+
+      '</tbody></table></div></section>'+
+      '<section class="card section"><h2>Manual verified sale</h2><p class="muted small">Use only after independent verification. Duplicate order references are blocked per creator.</p><div class="two"><select id="aid" class="input"><option value="">Select creator</option>'+r.data.map(function(x){return '<option value="'+esc(x.affiliate_id)+'">'+esc(x.name)+' — '+esc(x.affiliate_id)+'</option>'}).join("")+'</select><div class="two"><input id="amt" class="input" type="number" min="0.01" step="0.01" placeholder="Sale amount ₹"><input id="ord" class="input" placeholder="Order reference (optional)"></div></div><br><button class="btn" onclick="recordSale()">Add verified sale</button></section>'+
+      '<section class="card section"><h2>Creators & payouts</h2><div class="table-wrap"><table class="table"><thead><tr><th>Creator</th><th>Clicks</th><th>Sales</th><th>Earned</th><th>Latest payout</th><th></th></tr></thead><tbody>'+
+      r.data.map(function(x){return '<tr><td><b>'+esc(x.name)+'</b><div class="muted small">Payment details are stored privately in the creator profile.</div></td><td>'+x.clicks+'</td><td>'+x.sales+'</td><td>'+formatMoney(x.earned)+'</td><td>'+formatMoney(x.withdrawal_amount||0)+' · '+esc(x.withdrawal_status||"—")+'</td><td>'+(x.withdrawal_id&&x.withdrawal_status==="requested"?'<button class="pill" data-id="'+esc(x.withdrawal_id)+'" onclick="approve(this.dataset.id)">Mark paid</button>':"—")+'</td></tr>'}).join("")+
+      '</tbody></table></div></section>';
+  }catch(e){showError(e)}
+}
+async function saveAttribution(id){
+  try{
+    const tag=$("tag-"+id).value.trim(),publisher=$("pub-"+id).value.trim(),url=$("url-"+id).value.trim();
+    if(!url){toast("Paste the Amazon Attribution destination URL first.");return}
+    const r=await sb.rpc("admin_upsert_attribution_tag",{p_affiliate_id:id,p_tag_id:tag||null,p_publisher_id:publisher||null,p_destination_url:url,p_asin:"B0HK6B59PL"});
+    toast(r.error?r.error.message:"Attribution mapping saved.");if(!r.error)await showAdmin();
+  }catch(e){showError(e)}
+}
+async function runAmazonSync(){
+  try{
+    $("syncMsg").textContent="Syncing…";
+    const r=await sb.functions.invoke("amazon-attribution-sync",{body:{mode:"sync"}});
+    if(r.error){$("syncMsg").textContent=r.error.message;return}
+    const d=r.data||{};
+    $("syncMsg").textContent=d.status==="not_configured"?"Amazon Attribution access is not configured yet. Database and portal support are ready, but live API credentials/access still need to be configured as server-side Supabase secrets.":"Sync result: "+JSON.stringify(d);
+    await showAdmin();
+  }catch(e){showError(e)}
+}
+async function recordSale(){
+  try{
+    const affiliateId=$("aid").value,amount=Number($("amt").value),order=$("ord").value.trim();
+    if(!affiliateId){toast("Select a creator first.");return}
+    if(!Number.isFinite(amount)||amount<=0){toast("Enter a valid sale amount.");return}
+    const r=await sb.rpc("admin_record_conversion",{p_affiliate_id:affiliateId,p_sale_amount:amount,p_external_order_ref:order||null});
+    toast(r.error?r.error.message:"Verified sale recorded.");if(!r.error)await showAdmin();
+  }catch(e){showError(e)}
+}
+async function approve(id){
+  try{
+    const ref=prompt("Optional payout reference (UPI/transfer reference):","");
+    if(ref===null)return;
+    const r=await sb.rpc("admin_approve_withdrawal",{p_withdrawal_id:id,p_payout_reference:ref.trim()||null});
+    toast(r.error?r.error.message:"Payout marked paid.");if(!r.error)await showAdmin();
+  }catch(e){showError(e)}
+}
+async function signout(){clearInterval(refreshTimer);await sb.auth.signOut();await showHome()}
+async function handleReferral(){
+  const ref=new URLSearchParams(location.search).get("ref");
+  if(!ref)return false;
+  $("app").innerHTML='<section class="hero"><div class="eyebrow">OPENING BOOK PAGE</div><h1>Taking you to Amazon…</h1><p>Please wait a moment.</p></section>';
+  try{
+    let token=localStorage.getItem("urp_visitor");if(!token){token=crypto.randomUUID();localStorage.setItem("urp_visitor",token)}
+    const r=await sb.rpc("record_referral_click",{p_code:ref,p_visitor_token:token,p_ip:null,p_user_agent:navigator.userAgent,p_referrer:document.referrer||null});
+    window.location.replace((r.data&&r.data.url)||AMAZON);
+  }catch(e){window.location.replace(AMAZON)}
+  return true;
+}
+(async function(){
+  try{
+    if(await handleReferral())return;
+    await nav();
+    const user=await getUser();
+    if(user)await refreshRole();else await showHome();
+    if(!authListener){
+      authListener=sb.auth.onAuthStateChange(function(event,session){
+        if(event==="PASSWORD_RECOVERY"){showAuth()}
+        else if(session&&session.user){refreshRole()}
+        else if(!session){showHome()}
+      });
+    }
+  }catch(e){showError(e)}
+})();
+</script>
+</body>
+</html>
