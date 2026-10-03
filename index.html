@@ -72,9 +72,19 @@ function toast(message){
   clearTimeout(window.__toastTimer);
   window.__toastTimer=setTimeout(function(){$("toast").classList.remove("show")},2500);
 }
-function fatalError(){$("errorOverlay").classList.add("show")}
-window.addEventListener("error",function(){fatalError()});
-window.addEventListener("unhandledrejection",function(){fatalError()});
+function showError(error){
+  console.error("[Creator Portal]",error);
+  const overlay=$("errorOverlay");
+  if(overlay){
+    const detail=error&&error.message?String(error.message):"A temporary connection or session problem occurred.";
+    const text=overlay.querySelector(".muted");
+    if(text) text.textContent="The portal hit a temporary problem. Your account and earnings data are safe. "+detail+" Try refreshing the page.";
+    overlay.classList.add("show");
+  }
+}
+function fatalError(error){showError(error)}
+window.addEventListener("error",function(event){showError(event.error||new Error("A page error occurred."))});
+window.addEventListener("unhandledrejection",function(event){showError(event.reason||new Error("A background request failed."))});
 function referralUrl(code){return location.origin+"/?ref="+encodeURIComponent(code)}
 function formatMoney(v){return "₹"+Number(v||0).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2})}
 function formatDate(v){return v?new Date(v).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):"—"}
@@ -190,9 +200,26 @@ function nextMilestone(sales){
 }
 async function showDashboard(){
   try{
-    const user=await getUser();if(!user){await showAuth();return}
-    const r=await sb.rpc("affiliate_dashboard");if(r.error)throw r.error;
-    state=r.data;await nav();renderDashboard();
+    let user=await getUser();
+    if(!user){await showAuth();return}
+    let r=await sb.rpc("affiliate_dashboard");
+    if(r.error){
+      const refreshed=await sb.auth.refreshSession();
+      if(!refreshed.error && refreshed.data.session){
+        user=refreshed.data.session.user;
+        r=await sb.rpc("affiliate_dashboard");
+      }
+    }
+    if(r.error)throw r.error;
+    if(!r.data||!r.data.affiliate||!r.data.link||!r.data.link.code){
+      const repaired=await sb.rpc("ensure_affiliate_profile",{p_name:null,p_upi_id:null});
+      if(repaired.error)throw repaired.error;
+      r=await sb.rpc("affiliate_dashboard");
+      if(r.error)throw r.error;
+    }
+    state=r.data;
+    try{await nav()}catch(navError){console.warn("[Creator Portal] navigation refresh failed",navError)}
+    renderDashboard();
     clearInterval(refreshTimer);refreshTimer=setInterval(function(){loadDashboardSilently()},60000);
   }catch(e){showError(e)}
 }
