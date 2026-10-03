@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://unfolding-rules-affiliate.onrender.com/sitemap.xml
