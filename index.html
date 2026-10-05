@@ -143,7 +143,7 @@ function renderFaq(target){
 async function showAuth(){
   signup=false;
   await nav();
-  $("app").innerHTML='<section class="card" style="max-width:470px;margin:70px auto"><div class="eyebrow">CREATOR PORTAL</div><h1 id="authTitle">Welcome back</h1><p class="muted" id="authSub">Sign in to see your clicks, verified sales, earnings and payouts.</p><input id="email" class="input" placeholder="Email" autocomplete="email"><br><br><input id="password" class="input" type="password" placeholder="Password" autocomplete="current-password"><br><br><input id="name" class="input hide" placeholder="Creator name" autocomplete="name"><br><br id="namebr" class="hide"><button class="btn" id="authButton" onclick="submitAuth()">Login</button><p class="msg" id="msg"></p><div class="row"><button class="pill" onclick="toggleSignup()">New creator? Sign up</button><button class="pill" onclick="sendReset()">Forgot password?</button></div></section>';
+  $("app").innerHTML='<section class="card" style="max-width:470px;margin:70px auto"><div class="eyebrow">CREATOR PORTAL</div><h1 id="authTitle">Welcome back</h1><p class="muted" id="authSub">Sign in to see your clicks, verified sales, earnings and payouts.</p><button class="btn secondary" id="googleButton" onclick="signInWithGoogle()" style="width:100%;min-height:46px;background:#fff;color:#111;border-color:#ddd"><span style="display:inline-flex;align-items:center;gap:8px;justify-content:center"><b style="font-size:18px">G</b> Continue with Google</span></button><div style="display:flex;align-items:center;gap:10px;margin:18px 0;color:#777;font-size:12px"><span style="height:1px;background:#2d2d2d;flex:1"></span>OR<span style="height:1px;background:#2d2d2d;flex:1"></span></div><input id="email" class="input" placeholder="Email" autocomplete="email"><br><br><input id="password" class="input" type="password" placeholder="Password" autocomplete="current-password"><br><br><input id="name" class="input hide" placeholder="Creator name" autocomplete="name"><br><br id="namebr" class="hide"><button class="btn" id="authButton" onclick="submitAuth()">Login</button><p class="msg" id="msg"></p><div class="row"><button class="pill" onclick="toggleSignup()">New creator? Sign up</button><button class="pill" onclick="sendReset()">Forgot password?</button></div></section>';
 }
 function toggleSignup(){
   signup=!signup;
@@ -152,6 +152,22 @@ function toggleSignup(){
   $("name").classList.toggle("hide",!signup);
   $("namebr").classList.toggle("hide",!signup);
   $("authButton").textContent=signup?"Create account":"Login";
+}
+async function signInWithGoogle(){
+  try{
+    const button=$("googleButton");
+    if(button){button.disabled=true;button.textContent="Connecting to Google…";}
+    const r=await sb.auth.signInWithOAuth({
+      provider:"google",
+      options:{redirectTo:location.origin}
+    });
+    if(r.error)throw r.error;
+  }catch(e){
+    const msg=$("msg");
+    if(msg)msg.textContent="Google sign-in failed: "+(e.message||"Please try again.");
+    const button=$("googleButton");
+    if(button){button.disabled=false;button.textContent="Continue with Google";}
+  }
 }
 async function submitAuth(){
   try{
