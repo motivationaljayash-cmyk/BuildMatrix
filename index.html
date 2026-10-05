@@ -104,7 +104,12 @@ function statusBadge(status){
 
 async function getUser(){
   const r=await sb.auth.getUser();
-  if(r.error)throw r.error;
+  if(r.error){
+    const message=String(r.error.message||"");
+    const name=String(r.error.name||"");
+    if(name==="AuthSessionMissingError" || message==="Auth session missing!") return null;
+    throw r.error;
+  }
   return r.data.user;
 }
 async function nav(){
