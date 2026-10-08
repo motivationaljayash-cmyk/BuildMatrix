@@ -1,1 +1,61 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>About Unfolding Rules Creator Hub</title><meta name="description" content="About the Unfolding Rules Creator Hub, a creator-focused referral and affiliate portal for Unfolding Rules of Power."><link rel="canonical" href="https://unfolding-rules-affiliate.onrender.com/about.html"><meta name="robots" content="index,follow"></head><body style="font-family:Arial,sans-serif;max-width:900px;margin:auto;padding:32px;line-height:1.7;color:#171717"><header><a href="/">← Unfolding Rules Creator Hub</a></header><main><h1>About Unfolding Rules Creator Hub</h1><p><strong>Unfolding Rules Creator Hub</strong> is a creator-focused portal for promoting <strong>Unfolding Rules of Power</strong>.</p><p>The hub combines creator signup, personal referral links, click tracking, verified sales reporting, commission calculations and payout requests in one place.</p><h2>For creators</h2><p>The goal is to make book promotion simple: join the program, share your referral link and use the dashboard to understand your referral activity.</p><h2>Program information</h2><p>The standard creator reward shown on the portal is ₹50 for every verified book sale, with a ₹100 minimum withdrawal.</p><p><a href="/creator-affiliate-program.html">Read the creator affiliate program details</a> or <a href="/book.html">view the book page</a>.</p></main></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>About Unfolding Rules Creator Hub</title><meta name="description" content="About the Unfolding Rules Creator Hub, a creator-focused referral and affiliate portal for Unfolding Rules of Power."><link rel="canonical" href="https://unfolding-rules-affiliate.onrender.com/about.html"><meta name="robots" content="index,follow"></head><body style="font-family:Arial,sans-serif;max-width:900px;margin:auto;padding:32px;line-height:1.7;color:#171717"><header><a href="/">← Unfolding Rules Creator Hub</a></header><main><h1>About Unfolding Rules Creator Hub</h1><p><strong>Unfolding Rules Creator Hub</strong> is a creator-focused portal for promoting <strong>Unfolding Rules of Power</strong>.</p><p>The hub combines creator signup, personal referral links, click tracking, verified sales reporting, commission calculations and payout requests in one place.</p><h2>For creators</h2><p>The goal is to make book promotion simple: join the program, share your referral link and use the dashboard to understand your referral activity.</p><h2>Program information</h2><p>The standard creator reward shown on the portal is ₹50 for every verified book sale, with a ₹100 minimum withdrawal.</p><p><a href="/creator-affiliate-program.html">Read the creator affiliate program details</a> or <a href="/book.html">view the book page</a>.</p></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  const VISITOR_SUPABASE_URL="https://ozrnsjalpyawbyacgzfe.supabase.co";
+  const VISITOR_SUPABASE_KEY=atob("c2JfcHVibGlzaGFibGVfWG43a3N0ck5GUlhGaVo4VHFwWXg3d19pV0VRazNSUg==");
+  const visitorSb=window.supabase?window.supabase.createClient(VISITOR_SUPABASE_URL,VISITOR_SUPABASE_KEY):null;
+  function makeUuid(){
+    if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(c){
+      const r=Math.random()*16|0,v=c==="x"?r:(r&3|8);
+      return v.toString(16);
+    });
+  }
+  async function trackVisitor(){
+    if(!visitorSb)return;
+    try{
+      const path=location.pathname||"/";
+      const key="urp_last_site_visit:"+path;
+      const now=Date.now();
+      const last=Number(localStorage.getItem(key)||0);
+      if(last && now-last < 30*60*1000)return;
+
+      let user=null;
+      try{
+        const u=await visitorSb.auth.getUser();
+        if(!u.error)user=u.data.user||null;
+      }catch(_){}
+
+      if(user){
+        const p=await visitorSb.from("affiliate_profiles").select("role").eq("id",user.id).maybeSingle();
+        if(p.data&&p.data.role==="admin")return;
+      }
+
+      let visitorId=localStorage.getItem("urp_visitor");
+      if(!visitorId){
+        visitorId=makeUuid();
+        localStorage.setItem("urp_visitor",visitorId);
+      }
+
+      let referrer=null;
+      try{referrer=document.referrer?new URL(document.referrer).origin:null}catch(_){}
+
+      const r=await visitorSb.from("site_visits").insert([{
+        visitor_id:visitorId,
+        user_id:user?user.id:null,
+        page_path:path,
+        referrer:referrer,
+        visited_at:new Date().toISOString()
+      }]);
+
+      if(!r.error)localStorage.setItem(key,String(now));
+    }catch(e){
+      console.warn("[Visitor tracking]",e);
+    }
+  }
+  window.__trackUnfoldingRulesVisitor=trackVisitor;
+  trackVisitor();
+})();
+</script>
+</body></html>
