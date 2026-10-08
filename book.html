@@ -1,1 +1,61 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Unfolding Rules of Power | Official Book Page</title><meta name="description" content="Official book page for Unfolding Rules of Power. Discover the book and visit its Amazon page through the Unfolding Rules Creator Hub."><link rel="canonical" href="https://unfolding-rules-affiliate.onrender.com/book.html"><meta name="robots" content="index,follow"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"Unfolding Rules of Power","author":{"@type":"Person","name":"Jayash Rajawat"},"url":"https://unfolding-rules-affiliate.onrender.com/book.html","sameAs":"https://www.amazon.in/dp/B0HLXNZ6ZY"}</script></head><body style="font-family:Arial,sans-serif;max-width:900px;margin:auto;padding:32px;line-height:1.7;color:#171717"><header><a href="/">← Unfolding Rules Creator Hub</a></header><main><h1>Unfolding Rules of Power</h1><p><strong>Unfolding Rules of Power</strong> is the book promoted by the Unfolding Rules Creator Hub. The hub gives creators a referral link to share the book with their audiences.</p><h2>Official Amazon page</h2><p><a href="https://www.amazon.in/dp/B0HLXNZ6ZY" rel="nofollow sponsored noopener">View Unfolding Rules of Power on Amazon</a></p><h2>For creators</h2><p>Creators can <a href="/creator-affiliate-program.html">learn about the affiliate program</a> and join from the <a href="/">Creator Hub homepage</a>.</p></main></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Unfolding Rules of Power | Official Book Page</title><meta name="description" content="Official book page for Unfolding Rules of Power. Discover the book and visit its Amazon page through the Unfolding Rules Creator Hub."><link rel="canonical" href="https://unfolding-rules-affiliate.onrender.com/book.html"><meta name="robots" content="index,follow"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"Unfolding Rules of Power","author":{"@type":"Person","name":"Jayash Rajawat"},"url":"https://unfolding-rules-affiliate.onrender.com/book.html","sameAs":"https://www.amazon.in/dp/B0HLXNZ6ZY"}</script></head><body style="font-family:Arial,sans-serif;max-width:900px;margin:auto;padding:32px;line-height:1.7;color:#171717"><header><a href="/">← Unfolding Rules Creator Hub</a></header><main><h1>Unfolding Rules of Power</h1><p><strong>Unfolding Rules of Power</strong> is the book promoted by the Unfolding Rules Creator Hub. The hub gives creators a referral link to share the book with their audiences.</p><h2>Official Amazon page</h2><p><a href="https://www.amazon.in/dp/B0HLXNZ6ZY" rel="nofollow sponsored noopener">View Unfolding Rules of Power on Amazon</a></p><h2>For creators</h2><p>Creators can <a href="/creator-affiliate-program.html">learn about the affiliate program</a> and join from the <a href="/">Creator Hub homepage</a>.</p></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  const VISITOR_SUPABASE_URL="https://ozrnsjalpyawbyacgzfe.supabase.co";
+  const VISITOR_SUPABASE_KEY=atob("c2JfcHVibGlzaGFibGVfWG43a3N0ck5GUlhGaVo4VHFwWXg3d19pV0VRazNSUg==");
+  const visitorSb=window.supabase?window.supabase.createClient(VISITOR_SUPABASE_URL,VISITOR_SUPABASE_KEY):null;
+  function makeUuid(){
+    if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(c){
+      const r=Math.random()*16|0,v=c==="x"?r:(r&3|8);
+      return v.toString(16);
+    });
+  }
+  async function trackVisitor(){
+    if(!visitorSb)return;
+    try{
+      const path=location.pathname||"/";
+      const key="urp_last_site_visit:"+path;
+      const now=Date.now();
+      const last=Number(localStorage.getItem(key)||0);
+      if(last && now-last < 30*60*1000)return;
+
+      let user=null;
+      try{
+        const u=await visitorSb.auth.getUser();
+        if(!u.error)user=u.data.user||null;
+      }catch(_){}
+
+      if(user){
+        const p=await visitorSb.from("affiliate_profiles").select("role").eq("id",user.id).maybeSingle();
+        if(p.data&&p.data.role==="admin")return;
+      }
+
+      let visitorId=localStorage.getItem("urp_visitor");
+      if(!visitorId){
+        visitorId=makeUuid();
+        localStorage.setItem("urp_visitor",visitorId);
+      }
+
+      let referrer=null;
+      try{referrer=document.referrer?new URL(document.referrer).origin:null}catch(_){}
+
+      const r=await visitorSb.from("site_visits").insert([{
+        visitor_id:visitorId,
+        user_id:user?user.id:null,
+        page_path:path,
+        referrer:referrer,
+        visited_at:new Date().toISOString()
+      }]);
+
+      if(!r.error)localStorage.setItem(key,String(now));
+    }catch(e){
+      console.warn("[Visitor tracking]",e);
+    }
+  }
+  window.__trackUnfoldingRulesVisitor=trackVisitor;
+  trackVisitor();
+})();
+</script>
+</body></html>
