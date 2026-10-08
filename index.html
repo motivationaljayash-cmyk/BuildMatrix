@@ -102,32 +102,6 @@ function statusBadge(status){
   return '<span class="badge '+c+'"><span class="dot"></span>'+esc(status||"info")+"</span>";
 }
 
-async function trackSiteVisit(){
-  if(window.__trackedUnfoldingRulesVisitor)return;
-  window.__trackedUnfoldingRulesVisitor=true;
-  try{
-    const path=location.pathname||"/";
-    const key="urp_last_site_visit:"+path;
-    const now=Date.now();
-    const last=Number(localStorage.getItem(key)||0);
-    if(last && now-last < 30*60*1000)return;
-    const user=await getUser().catch(function(){return null});
-    if(user){
-      const p=await sb.from("affiliate_profiles").select("role").eq("id",user.id).maybeSingle();
-      if(p.data&&p.data.role==="admin")return;
-    }
-    let visitorId=localStorage.getItem("urp_visitor");
-    if(!visitorId){
-      visitorId=(crypto.randomUUID?crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(c){const r=Math.random()*16|0,v=c==="x"?r:(r&3|8);return v.toString(16)}));
-      localStorage.setItem("urp_visitor",visitorId);
-    }
-    let referrer=null;
-    try{referrer=document.referrer?new URL(document.referrer).origin:null}catch(_){}
-    const r=await sb.from("site_visits").insert([{visitor_id:visitorId,user_id:user?user.id:null,page_path:path,referrer:referrer,visited_at:new Date().toISOString()}]);
-    if(!r.error)localStorage.setItem(key,String(now));
-  }catch(e){console.warn("[Visitor tracking]",e)}
-}
-
 async function getUser(){
   const r=await sb.auth.getUser();
   if(r.error){
@@ -146,7 +120,7 @@ async function nav(){
   }
   const p=await sb.from("affiliate_profiles").select("role,name").eq("id",user.id).maybeSingle();
   let h='<button class="pill" onclick="showHome()">Home</button><button class="pill" onclick="showDashboard()">Dashboard</button>';
-  if(p.data&&p.data.role==="admin")h+='<button class="pill" onclick="showAdmin()">Admin</button><button class="pill" onclick="showVisitorAnalytics()">Visitors</button>';
+  if(p.data&&p.data.role==="admin")h+='<button class="pill" onclick="showAdmin()">Admin</button>';
   h+='<button class="pill" onclick="showHelp()">Help</button><button class="pill" onclick="signout()">Logout</button>';
   $("nav").innerHTML=h;
 }
@@ -371,41 +345,6 @@ async function showHelp(){
     renderFaq("helpFaq");
   }catch(e){showError(e)}
 }
-async function showVisitorAnalytics(){
-  try{
-    const user=await getUser();
-    if(!user){await showAuth();return}
-    const profile=await sb.from("affiliate_profiles").select("role").eq("id",user.id).maybeSingle();
-    if(profile.data&&profile.data.role!=="admin"){toast("Admin access required");await showDashboard();return}
-    const r=await sb.rpc("admin_site_analytics",{p_days:30});
-    if(r.error)throw r.error;
-    const d=r.data||{};
-    const daily=Array.isArray(d.daily)?d.daily:[];
-    const pages=Array.isArray(d.topPages)?d.topPages:[];
-    const refs=Array.isArray(d.topReferrers)?d.topReferrers:[];
-    const maxVisits=Math.max(1,...daily.map(function(x){return Number(x.visits||0)}));
-    const dailyHtml=daily.map(function(x){
-      const width=Math.max(4,Math.round(Number(x.visits||0)/maxVisits*100));
-      return '<div class="item"><div class="row"><span><b>'+esc(x.day)+'</b><span class="muted small"> · '+Number(x.visitors||0)+' visitors</span></span><b>'+Number(x.visits||0)+'</b></div><div class="progress" style="margin-top:8px"><div style="width:'+width+'%"></div></div></div>';
-    }).join("")||'<div class="empty">No visit data in the last 30 days.</div>';
-    const pageHtml=pages.map(function(x){return '<tr><td>'+esc(x.page)+'</td><td>'+Number(x.visits||0)+'</td><td>'+Number(x.visitors||0)+'</td></tr>'}).join("")||'<tr><td colspan="3" class="muted">No page data.</td></tr>';
-    const refHtml=refs.map(function(x){return '<tr><td style="overflow-wrap:anywhere">'+esc(x.referrer)+'</td><td>'+Number(x.visits||0)+'</td><td>'+Number(x.visitors||0)+'</td></tr>'}).join("")||'<tr><td colspan="3" class="muted">No referrer data.</td></tr>';
-    await nav();
-    $("app").innerHTML=
-      '<section class="card section"><div class="eyebrow">ADMIN ONLY</div><div class="section-title"><div><h1 style="margin:0">Visitor analytics</h1><p class="muted">Private traffic dashboard for the book affiliate site.</p></div><button class="btn secondary" onclick="showVisitorAnalytics()">Refresh</button></div></section>'+
-      '<section class="grid section">'+
-        '<div class="card"><div class="stat">'+Number(d.totalVisitors||0)+'</div><div class="label">Unique visitors · all time</div></div>'+
-        '<div class="card"><div class="stat">'+Number(d.totalVisits||0)+'</div><div class="label">Page visits · all time</div></div>'+
-        '<div class="card"><div class="stat">'+Number(d.todayVisitors||0)+'</div><div class="label">Unique visitors · today</div><div class="muted small">'+Number(d.todayVisits||0)+' visits today</div></div>'+
-        '<div class="card"><div class="stat">'+Number(d.last7Visitors||0)+'</div><div class="label">Unique visitors · last 7 days</div><div class="muted small">'+Number(d.last7Visits||0)+' visits in 7 days</div></div>'+
-      '</section>'+
-      '<section class="two section"><div class="card"><div class="section-title"><h2>Last 30 days</h2><span class="badge blue"><span class="dot"></span>'+Number(d.last30Visitors||0)+' unique</span></div><div class="list">'+dailyHtml+'</div></div>'+
-      '<div class="card"><h2>Top pages</h2><div class="table-wrap"><table class="table"><thead><tr><th>Page</th><th>Visits</th><th>Visitors</th></tr></thead><tbody>'+pageHtml+'</tbody></table></div></div></section>'+
-      '<section class="card section"><h2>Traffic sources</h2><div class="table-wrap"><table class="table"><thead><tr><th>Referrer</th><th>Visits</th><th>Visitors</th></tr></thead><tbody>'+refHtml+'</tbody></table></div></section>'+
-      '<section class="notice section"><b>Privacy note:</b> <span class="muted">The counter uses a random anonymous visitor ID stored in the browser. It does not collect IP addresses, and this dashboard is not shown to creators or public visitors.</span></section>';
-  }catch(e){showError(e)}
-}
-
 async function showAdmin(){
   try{
     const user=await getUser();if(!user){await showAuth();return}
@@ -475,7 +414,7 @@ async function handleReferral(){
 }
 (async function(){
   try{
-    await trackSiteVisit();\n    if(await handleReferral())return;
+    if(await handleReferral())return;
     await nav();
     const user=await getUser();
     if(user)await refreshRole();else await showHome();
