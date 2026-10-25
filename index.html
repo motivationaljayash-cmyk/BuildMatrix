@@ -355,7 +355,7 @@ async function showAdmin(){
     await nav();
     const mapped=(a.data||[]).filter(function(x){return x.mapped}).length;
     $("app").innerHTML='<section class="card section"><div class="eyebrow">ADMIN</div><h1>Creator program control</h1><p class="muted">Manage attribution mapping, verify sales, and process payout requests.</p><div class="grid"><div class="card"><div class="stat">'+r.data.length+'</div><div class="label">Creators</div></div><div class="card"><div class="stat">'+r.data.reduce(function(a,x){return a+Number(x.clicks||0)},0)+'</div><div class="label">Total clicks</div></div><div class="card"><div class="stat">'+r.data.reduce(function(a,x){return a+Number(x.sales||0)},0)+'</div><div class="label">Verified sales</div></div><div class="card"><div class="stat">'+mapped+'</div><div class="label">Attribution mappings</div></div></div></section>'+
-      '<section class="card section"><div class="section-title"><h2>Amazon Attribution</h2><span class="badge amber"><span class="dot"></span>API connection depends on Amazon access</span></div><p class="muted small">Map one Amazon Attribution tag/publisher per creator. The sync function is server-side and only adds commissions when attribution data is verified.</p><button class="btn" onclick="runAmazonSync()">Sync Amazon conversions</button><p id="syncMsg" class="msg"></p></section>'+
+      '<section class="card section"><div class="section-title"><h2>Amazon Attribution</h2><span class="badge amber"><span class="dot"></span>Verified report import</span></div><p class="muted small">Set one unique Amazon Attribution tag ID and its tagged Amazon.in destination URL for every creator. Then import the official Amazon Attribution daily/product performance CSV. This portal credits ₹100 only from matched book-unit metrics and blocks duplicate imports.</p><div class="stack"><input id="amazonCsv" type="file" accept=".csv,text/csv" class="input"><div class="row"><button class="btn" onclick="importAmazonCsv()">Import Amazon report CSV</button><button class="pill" onclick="runAmazonSync()">Check connection</button></div></div><p id="syncMsg" class="msg"></p><p class="muted small">Required report fields: date, creator tag/report identifier, Product ASIN, Units Sold, and Attributed Sales. Only book ASIN B0HLXNZ6ZY is credited. Live automatic API sync is not connected until Amazon Ads API access is approved and configured.</p></section>'+
       '<section class="card section"><h2>Creator attribution mapping</h2><div class="table-wrap"><table class="table"><thead><tr><th>Creator</th><th>Code</th><th>Tag ID</th><th>Publisher</th><th>Destination URL</th><th></th></tr></thead><tbody>'+
       (a.data||[]).map(function(x){return '<tr><td><b>'+esc(x.name)+'</b><div class="muted small">'+esc(x.email)+'</div></td><td>'+esc(x.code||"—")+'</td><td><input id="tag-'+x.affiliate_id+'" class="input" value="'+esc(x.tag_id||"")+'" placeholder="Tag ID"></td><td><input id="pub-'+x.affiliate_id+'" class="input" value="'+esc(x.publisher_id||"")+'" placeholder="Publisher ID"></td><td><input id="url-'+x.affiliate_id+'" class="input" value="'+esc(x.destination_url||AMAZON)+'" placeholder="Amazon Attribution destination"></td><td><button class="pill" data-id="'+esc(x.affiliate_id)+'" onclick="saveAttribution(this.dataset.id)">Save</button></td></tr>'}).join("")+
       '</tbody></table></div></section>'+
@@ -373,14 +373,49 @@ async function saveAttribution(id){
     toast(r.error?r.error.message:"Attribution mapping saved.");if(!r.error)await showAdmin();
   }catch(e){showError(e)}
 }
+async function readFunctionError(error){
+  let message=error&&error.message?error.message:"Request failed.";
+  try{
+    const context=error&&error.context;
+    if(context&&typeof context.clone==="function"){
+      const body=await context.clone().json();
+      if(body&&(body.error||body.message))message=body.error||body.message;
+    }
+  }catch(e){}
+  return message;
+}
 async function runAmazonSync(){
   try{
-    $("syncMsg").textContent="Syncing…";
-    const r=await sb.functions.invoke("amazon-attribution-sync",{body:{mode:"sync"}});
-    if(r.error){$("syncMsg").textContent=r.error.message;return}
+    $("syncMsg").textContent="Checking configuration…";
+    const r=await sb.functions.invoke("amazon-attribution-sync",{body:{mode:"status"}});
+    if(r.error){$("syncMsg").textContent=await readFunctionError(r.error);return}
     const d=r.data||{};
-    $("syncMsg").textContent=d.status==="not_configured"?"Amazon Attribution access is not configured yet. Database and portal support are ready, but live API credentials/access still need to be configured as server-side Supabase secrets.":"Sync result: "+JSON.stringify(d);
-    await showAdmin();
+    $("syncMsg").textContent=(d.message||"Connection checked.")+" Creator tags configured: "+Number(d.configured_creator_tags||0)+".";
+    $("syncMsg").className="msg "+(d.status==="report_import_ready"?"ok":"warn");
+  }catch(e){showError(e)}
+}
+async function importAmazonCsv(){
+  try{
+    const input=$("amazonCsv"),file=input&&input.files&&input.files[0];
+    const msg=$("syncMsg");
+    if(!file){msg.textContent="Choose the official Amazon Attribution report CSV first.";return}
+    if(!file.name.toLowerCase().endsWith(".csv")){msg.textContent="Please select a .csv report exported from Amazon Attribution.";return}
+    if(file.size>3*1024*1024){msg.textContent="The file is over 3 MB. Export a smaller date range and import that report.";return}
+    msg.textContent="Reading and verifying report rows…";
+    msg.className="msg";
+    const csv=await file.text();
+    if(!csv.trim()){msg.textContent="The selected CSV file is empty.";return}
+    const r=await sb.functions.invoke("amazon-attribution-sync",{body:{mode:"import_csv",csv:csv,file_name:file.name}});
+    if(r.error){msg.textContent=await readFunctionError(r.error);msg.className="msg danger";return}
+    const d=r.data||{};
+    const summary="Imported "+Number(d.events_imported||0)+" report rows. Newly credited book units: "+Number(d.verified_units_credited||0)+". New creator rewards: ₹"+Number(d.creator_reward_total||0).toLocaleString("en-IN")+". Skipped rows: "+Number(d.rows_skipped||0)+".";
+    msg.textContent=(d.message?d.message+" ":"")+summary;
+    msg.className="msg "+(d.status==="success"?"ok":"warn");
+    if(d.ok){
+      await showAdmin();
+      const refreshed=$("syncMsg");
+      if(refreshed){refreshed.textContent=summary+" Import complete. Re-importing the same daily report will not create duplicate rewards.";refreshed.className="msg "+(d.status==="success"?"ok":"warn")}
+    }
   }catch(e){showError(e)}
 }
 async function recordSale(){
@@ -408,8 +443,22 @@ async function handleReferral(){
   try{
     let token=localStorage.getItem("urp_visitor");if(!token){token=(crypto.randomUUID?crypto.randomUUID():"v_"+Date.now()+"_"+Math.random().toString(36).slice(2));localStorage.setItem("urp_visitor",token)}
     const r=await sb.rpc("record_referral_click",{p_code:ref,p_visitor_token:token,p_ip:null,p_user_agent:navigator.userAgent,p_referrer:document.referrer||null});
-    window.location.replace((r.data&&r.data.url)||AMAZON);
-  }catch(e){window.location.replace(AMAZON)}
+    if(r.error){
+      console.error("[Creator Portal] Referral click was not recorded:",r.error.message);
+      window.location.replace(AMAZON);
+      return true;
+    }
+    const result=r.data||{};
+    if(!result.affiliate_id){
+      console.error("[Creator Portal] Referral code was not recognized; click was not credited.");
+      window.location.replace(AMAZON);
+      return true;
+    }
+    window.location.replace(result.url||AMAZON);
+  }catch(e){
+    console.error("[Creator Portal] Referral click tracking failed:",e);
+    window.location.replace(AMAZON)
+  }
   return true;
 }
 (async function(){
