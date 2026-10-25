@@ -168,7 +168,7 @@ async function submitAuth(){
     if(signup)r=await sb.auth.signUp({email,password,options:{data:{name:name}}});
     else r=await sb.auth.signInWithPassword({email,password});
     if(r.error){$("msg").textContent=r.error.message;return}
-    if(signup&&!r.data.session){$("msg").textContent="Account created. Check your email to confirm your account, then log in.";return}
+    if(signup&&!r.data.session){$("msg").textContent="Account created. Check your email to confirm it, then select “Already have an account? Sign in” here.";return}
     if(signup&&r.data.user){
       const q=await sb.rpc("ensure_affiliate_profile",{p_name:name,p_upi_id:null});
       if(q.error){$("msg").textContent=q.error.message;return}
