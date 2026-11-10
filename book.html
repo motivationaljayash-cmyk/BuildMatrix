@@ -1,62 +1,96 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Unfolding Rules of Power | Official Book Page</title><meta name="description" content="Official book page for Unfolding Rules of Power. Discover the book and visit its Amazon page through the Unfolding Rules Creator Hub."><link rel="canonical" href="https://unfolding-rules-affiliate.onrender.com/book.html"><meta name="robots" content="index,follow"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"Unfolding Rules of Power","author":{"@type":"Person","name":"Jayash Singh Rajawat"},"url":"https://unfolding-rules-affiliate.onrender.com/book.html","sameAs":"https://www.amazon.in/dp/B0HLXNZ6ZY"}</script></head><body style="font-family:Arial,sans-serif;max-width:900px;margin:auto;padding:32px;line-height:1.7;color:#171717"><header><a href="/">← Unfolding Rules Creator Hub</a></header><main><h1>Unfolding Rules of Power</h1><p><strong>Unfolding Rules of Power</strong> is the book promoted by the Unfolding Rules Creator Hub. The hub gives creators a referral link to share the book with their audiences.</p><h2>Official Amazon page</h2><p><a href="https://www.amazon.in/dp/B0HLXNZ6ZY" rel="nofollow sponsored noopener">View Unfolding Rules of Power on Amazon</a></p><h2>For creators</h2><p>Creators can <a href="/creator-affiliate-program.html">learn about the affiliate program</a> and join from the <a href="/">Creator Hub homepage</a>.</p><p>Questions about the book or creator program? <a href="/contact.html">Contact us</a>. Read our <a href="/privacy-policy.html">Privacy Policy</a> or <a href="/creator-affiliate-program.html">creator program terms</a>.</p></main>
-<footer style="margin-top:30px;padding:18px 0;border-top:1px solid #ddd;font-size:14px"><a href="/privacy-policy.html">Privacy Policy</a> · <a href="/contact.html">Contact</a> · <a href="/creator-affiliate-program.html">Program terms</a></footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-(function(){
-  const VISITOR_SUPABASE_URL="https://ozrnsjalpyawbyacgzfe.supabase.co";
-  const VISITOR_SUPABASE_KEY=atob("c2JfcHVibGlzaGFibGVfWG43a3N0ck5GUlhGaVo4VHFwWXg3d19pV0VRazNSUg==");
-  const visitorSb=window.supabase?window.supabase.createClient(VISITOR_SUPABASE_URL,VISITOR_SUPABASE_KEY):null;
-  function makeUuid(){
-    if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(c){
-      const r=Math.random()*16|0,v=c==="x"?r:(r&3|8);
-      return v.toString(16);
-    });
-  }
-  async function trackVisitor(){
-    if(!visitorSb)return;
-    try{
-      const path=location.pathname||"/";
-      const key="urp_last_site_visit:"+path;
-      const now=Date.now();
-      const last=Number(localStorage.getItem(key)||0);
-      if(last && now-last < 30*60*1000)return;
-
-      let user=null;
-      try{
-        const u=await visitorSb.auth.getUser();
-        if(!u.error)user=u.data.user||null;
-      }catch(_){}
-
-      if(user){
-        const p=await visitorSb.from("affiliate_profiles").select("role").eq("id",user.id).maybeSingle();
-        if(p.data&&p.data.role==="admin")return;
-      }
-
-      let visitorId=localStorage.getItem("urp_visitor");
-      if(!visitorId){
-        visitorId=makeUuid();
-        localStorage.setItem("urp_visitor",visitorId);
-      }
-
-      let referrer=null;
-      try{referrer=document.referrer?new URL(document.referrer).origin:null}catch(_){}
-
-      const r=await visitorSb.from("site_visits").insert([{
-        visitor_id:visitorId,
-        user_id:user?user.id:null,
-        page_path:path,
-        referrer:referrer,
-        visited_at:new Date().toISOString()
-      }]);
-
-      if(!r.error)localStorage.setItem(key,String(now));
-    }catch(e){
-      console.warn("[Visitor tracking]",e);
-    }
-  }
-  window.__trackUnfoldingRulesVisitor=trackVisitor;
-  trackVisitor();
-})();
-</script>
-</body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090806">
+<title>Unfolding Rules of Power by Jayash Rajawat | Paperback</title>
+<meta name="description" content="Explore Unfolding Rules of Power by Jayash Rajawat, a thought-provoking book about human nature, psychology, influence, manipulation and everyday power dynamics.">
+<meta name="author" content="Jayash Rajawat">
+<link rel="canonical" href="https://unfolding-rules-affiliate.onrender.com/book.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="book">
+<meta property="og:title" content="Unfolding Rules of Power | Jayash Rajawat">
+<meta property="og:description" content="The Unspoken Laws of Human Nature, Status, Leverage, and Self-Mastery.">
+<meta property="og:image" content="https://unfolding-rules-affiliate.onrender.com/assets/unfolding-rules-cover.webp">
+<meta property="og:url" content="https://unfolding-rules-affiliate.onrender.com/book.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unfolding Rules of Power | Jayash Rajawat">
+<meta name="twitter:image" content="https://unfolding-rules-affiliate.onrender.com/assets/unfolding-rules-cover.webp">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"Unfolding Rules of Power","bookFormat":"https://schema.org/Paperback","author":{"@type":"Person","name":"Jayash Rajawat"},"image":"https://unfolding-rules-affiliate.onrender.com/assets/unfolding-rules-cover.webp","url":"https://unfolding-rules-affiliate.onrender.com/book.html","sameAs":"https://amzn.in/d/0gjWdXjX"}</script>
+<style>
+:root{color-scheme:dark;--gold:#d7ae57;--gold2:#f0d58f;--bg:#090806;--panel:#12100b;--line:#40331d;--text:#f6f1e7;--muted:#b4aa96}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 22% 8%,#241c0e 0,#0b0906 40%,#070605 100%);color:var(--text);font:16px/1.7 Inter,Arial,sans-serif}
+a{color:var(--gold2)}
+.wrap{max-width:1100px;margin:auto;padding:28px 22px 55px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--line);padding-bottom:18px}
+.brand{font-size:12px;font-weight:900;letter-spacing:.18em;color:var(--gold2);text-decoration:none}
+.back{font-size:13px;text-decoration:none;color:#cfc4ae}
+.hero{display:grid;grid-template-columns:minmax(210px,.68fr) minmax(0,1.32fr);gap:clamp(28px,6vw,72px);align-items:center;padding:58px 0}
+.cover{display:block;width:100%;max-width:330px;margin:auto;border:1px solid #715a2c;border-radius:4px;box-shadow:0 28px 80px rgba(0,0,0,.65),0 0 34px rgba(215,174,87,.1)}
+.kicker{font-size:11px;letter-spacing:.24em;font-weight:900;color:var(--gold);text-transform:uppercase}
+h1{font:900 clamp(42px,6vw,76px)/.95 Georgia,serif;letter-spacing:-.04em;margin:16px 0;color:#fffaf0}
+h1 span{display:block;color:var(--gold)}
+.tagline{font:italic 18px/1.5 Georgia,serif;color:var(--gold2);margin:0 0 20px}
+.lead{color:#d2c8b6;font-size:17px;line-height:1.8}
+.buy{display:inline-flex;align-items:center;justify-content:center;margin-top:16px;padding:14px 22px;border-radius:10px;background:linear-gradient(135deg,#f0d58f,#bd8829);color:#140f05;text-decoration:none;font-weight:900;border:1px solid #d7ae57;box-shadow:0 12px 28px rgba(215,174,87,.14)}
+.note{font-size:12px;color:#9e947f;margin-top:14px;line-height:1.6}
+.panel{background:rgba(18,16,11,.88);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,38px);margin:22px 0}
+h2{font:700 30px/1.15 Georgia,serif;color:var(--gold2);margin:0 0 18px}
+p{margin:0 0 16px}
+ul{padding-left:22px;color:#ddd3c1}
+li{padding:4px 0}
+.closing{font:italic 20px/1.5 Georgia,serif;color:var(--gold2);text-align:center;margin:26px 0 0}
+footer{border-top:1px solid var(--line);margin-top:38px;padding-top:22px;text-align:center;color:#8d836f;font-size:12px}
+footer a{margin:0 10px}
+@media(max-width:700px){.wrap{padding:18px 15px 40px}header{align-items:flex-start;flex-direction:column}.hero{grid-template-columns:1fr;gap:28px;padding:34px 0}.cover{max-width:230px}h1{font-size:clamp(42px,12vw,58px)}.hero-copy{text-align:center}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><a class="brand" href="/">UNFOLDING RULES OF POWER</a><a class="back" href="/">← Back to Creator Hub</a></header>
+<main>
+<section class="hero">
+  <div><img class="cover" src="/assets/unfolding-rules-cover.webp" alt="Premium Edition cover of Unfolding Rules of Power by Jayash Rajawat"></div>
+  <div class="hero-copy">
+    <div class="kicker">Premium Edition · Paperback</div>
+    <h1>UNFOLDING RULES <span>OF POWER</span></h1>
+    <p class="tagline">The Unspoken Laws of Human Nature, Status, Leverage, and Self-Mastery</p>
+    <p class="lead">What if the people around you are influencing your decisions more than you realize?</p>
+    <p>Every conversation has two sides: what is said and what happens beneath the surface. Behind ordinary words, gestures, and relationships lie patterns of influence, hidden motives, and unspoken power dynamics.</p>
+    <a class="buy" href="https://amzn.in/d/0gjWdXjX" target="_blank" rel="nofollow sponsored noopener noreferrer">Buy the paperback on Amazon</a>
+    <p class="note">This button currently opens the paperback product listing supplied by the author. The adult-managed Amazon Associates Special Link and its disclosure can be added when the account holder supplies the approved tagged link.</p>
+  </div>
+</section>
+<section class="panel">
+  <h2>Look beyond the surface</h2>
+  <p>Why do some people command attention while others struggle to be heard? How does manipulation work? And how can you recognize when someone is influencing your thinking without your awareness?</p>
+  <p>In <strong>Unfolding Rules of Power</strong>, Jayash Rajawat explores the psychology of power, human behaviour, influence, and manipulation.</p>
+</section>
+<section class="panel">
+  <h2>What you will explore</h2>
+  <ul>
+    <li>Recognize patterns of manipulation and influence.</li>
+    <li>Understand the psychology behind people's actions.</li>
+    <li>Communicate with greater awareness and confidence.</li>
+    <li>Set boundaries and make thoughtful decisions.</li>
+    <li>Understand power dynamics in everyday relationships.</li>
+  </ul>
+  <p>Power is not simply about controlling others. It is also about understanding yourself, thinking independently, and choosing how you respond.</p>
+  <p>Whether you are curious about psychology, human behaviour, or personal growth, this book offers a thought-provoking journey into the forces that shape the way people think, act, and interact.</p>
+  <p class="closing">Read between the lines. Recognize the patterns. Understand the rules of power.</p>
+</section>
+<section class="panel">
+  <h2>About the author</h2>
+  <p><strong>Jayash Rajawat</strong> writes about psychology, human behaviour, influence and personal understanding. <em>Unfolding Rules of Power</em> explores how people navigate relationships, choices and the subtle dynamics that shape everyday life.</p>
+  <p>For book and creator-program enquiries, visit the <a href="/contact.html">contact page</a>.</p>
+</section>
+</main>
+<footer>
+  <div>© 2026 Unfolding Rules of Power · Jayash Rajawat</div>
+  <div><a href="/privacy-policy.html">Privacy Policy</a><a href="/contact.html">Contact</a><a href="/creator-affiliate-program.html">Creator Program</a></div>
+</footer>
+</div>
+</body>
+</html>
